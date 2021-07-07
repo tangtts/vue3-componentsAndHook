@@ -1,27 +1,33 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3 + TypeScript + Vite + Bootstrap" />
+  <div>
+    <router-view></router-view>
+  </div>
 </template>
-
 <script lang="ts">
-import { defineComponent } from 'vue'
-import HelloWorld from './components/HelloWorld.vue'
-
+import { defineComponent, onMounted } from "vue";
+import { useStore } from "vuex";
 export default defineComponent({
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-})
+  name: "App",
+  setup() {
+    const store = useStore();
+    function _isMobile() {
+      const rect = document.body.getBoundingClientRect();
+      store.commit("checkedIsMobile", rect.width);
+    }
+    onMounted(() => {
+      _isMobile();
+      window.onresize = _isMobile;
+    });
+  },
+});
 </script>
 
-<style>
+<style lang="scss">
+html,
+body,
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  height: 100vh;
+  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB,
+    Microsoft YaHei, Arial, sans-serif;
 }
 </style>

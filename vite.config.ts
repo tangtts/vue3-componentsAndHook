@@ -3,8 +3,10 @@ import vue from '@vitejs/plugin-vue'
 import path from 'path'
 import styleImport from 'vite-plugin-style-import'
 import { svgBuilder } from './src/plugins/svgBuilder'
-
 const resolve = (dir: string) => path.join(__dirname, dir)
+
+// 环境变量 https://blog.csdn.net/chendf__/article/details/115676683
+// https://vitejs.dev/config/
 export default defineConfig({
 	base: './',
 	plugins: [
@@ -16,6 +18,10 @@ export default defineConfig({
 					libraryName: 'element-plus',
 					esModule: true,
 					ensureStyleFile: true,
+					resolveStyle: name => {
+						name = name.slice(3)
+						return `element-plus/packages/theme-chalk/src/${name}.scss`
+					},
 					resolveComponent: name => {
 						return `element-plus/lib/${name}`
 					}

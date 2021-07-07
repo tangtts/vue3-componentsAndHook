@@ -1,6 +1,5 @@
 // 按需加载element
 import type { App } from 'vue'
-import "../assets/sass/element-variables.scss"
 
 import {
 	ElAlert,
