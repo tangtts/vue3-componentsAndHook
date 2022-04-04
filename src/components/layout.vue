@@ -1,4 +1,3 @@
-
 <template>
   <el-container>
     <div v-if="isMobile">
@@ -12,32 +11,23 @@
       </el-drawer>
     </div>
     <div v-else>
-<my-aside> </my-aside>
+      <my-aside> </my-aside>
     </div>
     <el-container>
       <el-header>
         <el-container>
-          <div style="font-size: 12px" class="text-right w-100">
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="d-flex justify-content-between align-items-center">
+          <div class="w-full">
+            <div class="flex justify-between items-center">
+              <div class="flex justify-between items-center">
                 <span style="font-size: 25px" @click.prevent="clickCollapse">
-                  <i
-                    class="el-icon-s-fold"
-                    style="fontsize: inherit"
-                    v-show="!isCollapes"
-                  ></i>
-                  <i
-                    class="el-icon-s-unfold"
-                    v-show="isCollapes"
-                    style="fontsize: inherit"
-                  ></i>
+                  <i class="el-icon-s-fold" v-show="!isCollapes"></i>
+                  <i class="el-icon-s-unfold" v-show="isCollapes"></i>
                 </span>
                 <Breadcrumb />
               </div>
-
               <div>
                 <el-dropdown>
-                  <i class="el-icon-setting" style="margin-right: 15px"></i>
+                  <setting style="width: 1em; height: 1em; margin-right: 8px" />
                   <template #dropdown>
                     <el-dropdown-menu>
                       <el-dropdown-item>退出</el-dropdown-item>
@@ -57,41 +47,23 @@
   </el-container>
 </template>
 
-<script>
+<script setup lang="ts">
+import { ref } from "vue";
+import { useStore } from "vuex";
 import myAside from "./common/Aside/index.vue";
 import Breadcrumb from "./common/Breadcrumb/index.vue";
-export default {
-  components: {
-    myAside,
-    Breadcrumb,
-  },
-  data() {
-    return {
-      openDrawer: false,
-    };
-  },
-  created() {
-    this.openDrawer = this.isMobile
-  },
-  computed: {
-    isMobile(){
-      return this.$store.state.isMobile
-    },
-    isCollapes() {
-      return this.$store.state.isCollapse;
-    },
-  },
-  methods: {
-    clickCollapse() {
-      if(this.isMobile){
-       this.openDrawer = true;
-      this.$store.commit("setCollapseOpen");
-      }else {
-      this.$store.commit("toggleCollapse");
-
-      }
-    },
-  },
+import { Setting, Edit } from "@element-plus/icons-vue";
+let openDrawer = ref(false);
+let store = useStore();
+const isMobile = store.state.isMobile;
+const isCollapes = store.state.isCollapse;
+const clickCollapse = () => {
+  if (isMobile) {
+    openDrawer.value = true;
+    store.commit("setCollapseOpen");
+  } else {
+    store.commit("toggleCollapse");
+  }
 };
 </script>
 

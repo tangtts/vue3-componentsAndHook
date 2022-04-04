@@ -1,79 +1,75 @@
-
 <template>
-  <div style="height: 100vh">
-    <el-aside style="background: #304156; height: 100vh" width="auto">
-      <el-menu
-        router
-        :default-active="$route.path"
-        :collapse="isCollapse"
-        background-color="#304156"
-        text-color="#f4f4f5"
-        overflow-y
-        scroll
-        active-text-color="#409eff"
-        class="el-menu-vertical-demo"
-      >
-        <el-header class="header">
-          <div class="text-center text-white">
-            <span style="fontsize: 14px">后台管理系统</span>
-          </div>
-        </el-header>
-
-        <div v-for="(item, key) in router" :key="item.path">
-          <el-submenu :index="key + ''">
-            <template #title>
-              <i :class="['iconfont', item.meta?.icon]"></i>
-
-              <span :class="[{ 'd-none': isCollapse }, 'ms-2']">
-                {{ item.meta?.title || "" }}</span
-              >
-            </template>
-            <el-menu-item-group
-              v-for="(child, childKey) in hasChildren(item)"
-              :key="childKey"
-            >
-              <el-menu-item :index="child.path">
-                {{ child.meta?.title }}
-              </el-menu-item>
-            </el-menu-item-group>
-          </el-submenu>
+  <div style="height: 100vh" class="el-menu-vertical-demo">
+    <el-menu
+      class="h-full overflow-hidden"
+      :collapse="isCollapse"
+      background-color="#304156"
+      text-color="#f4f4f5"
+      scroll
+      router
+      active-text-color="#409eff"
+    >
+      <el-header class="header">
+        <div class="text-center text-white">
+          <span class="font-sm">{{ NAME }}</span>
         </div>
-      </el-menu>
-    </el-aside>
+      </el-header>
+      <!-- 如果是多种的话是 el-sub-menu el-menu-item -->
+      <!-- 单个的是 el-menu-item-->
+      <div v-for="(item, key) in routes" :key="item.path">
+        <el-submenu
+          v-if="item.children && item.children.length > 0"
+          :index="item.path"
+          :key="item.path"
+        >
+          <template #title>
+            <div class="flex">
+              <Location />
+              <span class="ml-2">{{ item.meta?.title }}</span>
+            </div>
+          </template>
+          <div>
+            <el-menu-item
+              :index="child.path"
+              v-for="child of item.children"
+              :key="child.path"
+            >
+              <i :class="['iconfont', child.meta?.icon]"></i>
+              {{ child.meta?.title || "" }}
+            </el-menu-item>
+          </div>
+        </el-submenu>
+
+        <el-menu-item :index="item.path" v-else :key="item.meta.title">
+          {{ item.path }}
+          <template #title>
+            <div class="flex">
+              <Menu /> <span class="ml-2">{{ item.meta.title }}</span>
+            </div>
+          </template>
+        </el-menu-item>
+      </div>
+    </el-menu>
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { State } from "../../../store/index";
 import { useStore } from "vuex";
-import { routes, routeItem } from "../../../router";
+import { routes } from "../../../router";
 import { defineComponent, computed, ref } from "vue";
-export default defineComponent({
-  setup() {
-    const store = useStore<State>();
- 
-    const isCollapse = computed(() => {
-      return store.state.isCollapse;
-    });
-    const hasChildren = computed(() => {
-      return function (item: routeItem) {
-        return item.children || [];
-      };
-    });
+import {
+  Document,
+  Menu as IconMenu,
+  Location,
+  Menu,
+} from "@element-plus/icons-vue";
+import { useRouter } from "vue-router";
+const NAME = import.meta.env.VITE_ADMIN_NAME;
 
-    const router = computed<routeItem[]>(() => {
-      return routes.filter((item) => !item.meta.isNotSideBar);
-    });
-
-
-
-    return {
-      isCollapse,
-      hasChildren,
-      router,
-     
-    };
-  },
+const store = useStore<State>();
+const isCollapse = computed(() => {
+  return store.state.isCollapse;
 });
 </script>
 
@@ -91,17 +87,12 @@ export default defineComponent({
   vertical-align: middle;
   overflow: hidden;
 }
-::v-deep(.el-menu) {
-  border: none;
-}
-::v-deep(.el-menu-item) {
-  background-color: #1f2d3d !important;
-}
-::v-deep(.el-menu-item-group__title) {
-  padding: 0 !important;
-}
+
 .el-menu-vertical-demo:not(.el-menu--collapse) {
-    width: 200px;
-    min-height: 400px;
-  }
+  width: 200px;
+  min-height: 400px;
+}
+svg {
+  width: 1rem;
+}
 </style>

@@ -6,11 +6,12 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "@element-plus/icons-vue": "^1.1.4",
     "@types/node": "^16.0.0",
     "@types/qs": "^6.9.6",
+    "@vueuse/core": "^8.2.4",
     "axios": "^0.21.1",
-    "bootstrap": "^5.0.2",
-    "element-plus": "^1.0.2-beta.54",
+    "element-plus": "1.0.2-beta.28",
     "path-to-regexp": "^6.2.0",
     "qs": "^6.10.1",
     "sass": "^1.35.1",
@@ -23,8 +24,11 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.2.4",
     "@vue/compiler-sfc": "^3.0.5",
+    "autoprefixer": "^10.4.4",
+    "postcss": "^8.4.12",
+    "tailwindcss": "3.0.15",
     "typescript": "^4.3.2",
-    "vite": "^2.4.0",
+    "vite": "2.8.6",
     "vue-tsc": "^0.0.24"
   }
 }
