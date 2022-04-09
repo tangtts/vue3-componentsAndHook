@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios'
 import { ElMessage, ElMessageBox } from 'element-plus'
 
-import router from '../router'
+import router from '../shims-router'
 
 function getSession(key: string) {
     let json: any = window.sessionStorage.getItem(key)

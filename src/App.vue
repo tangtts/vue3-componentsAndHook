@@ -1,14 +1,12 @@
 <template>
-  <div>
+  <div class="dark">
     <router-view></router-view>
   </div>
 </template>
-<script lang="ts">
-import { defineComponent, onMounted } from "vue";
+<script lang="ts" setup>
+import { defineComponent, onMounted,ref } from "vue";
 import { useStore } from "vuex";
-export default defineComponent({
-  name: "App",
-  setup() {
+
     const store = useStore();
     function _isMobile() {
       const rect = document.body.getBoundingClientRect();
@@ -18,8 +16,8 @@ export default defineComponent({
       _isMobile();
       window.onresize = _isMobile;
     });
-  },
-});
+  
+
 </script>
 
 <style lang="scss">

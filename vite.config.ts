@@ -29,7 +29,7 @@ export default defineConfig({
       store: resolve("src/store"),
       utils: resolve("src/utils"),
     },
-    "extensions":[".vue",".ts",".js"]
+    extensions:[".vue",".ts",".js"]
   },
   // server: {
   // 	//服务器主机名

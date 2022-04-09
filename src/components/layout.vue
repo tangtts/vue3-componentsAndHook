@@ -6,6 +6,7 @@
         v-model="openDrawer"
         direction="ltr"
         size="auto"
+      
       >
         <my-aside> </my-aside>
       </el-drawer>
@@ -13,7 +14,7 @@
     <div v-else>
       <my-aside> </my-aside>
     </div>
-    <el-container>
+    <el-container class="bg-white dark:bg-black">
       <el-header>
         <el-container>
           <div class="w-full">
@@ -41,7 +42,7 @@
         </el-container>
       </el-header>
       <el-main>
-        <router-view />
+        <router-view></router-view>
       </el-main>
     </el-container>
   </el-container>
