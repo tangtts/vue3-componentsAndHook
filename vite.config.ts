@@ -1,24 +1,21 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import path from "path";
-import { svgBuilder } from "./src/plugins/svgBuilder";
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
-
 const resolve = (dir: string) => path.join(__dirname, dir);
 export default defineConfig({
   base: "./",
   plugins: [
     vue(),
     AutoImport({
-      imports:["vue"],
+      imports: ["vue"],
       resolvers: [ElementPlusResolver()],
     }),
     Components({
       resolvers: [ElementPlusResolver()],
     }),
-    [svgBuilder("./src/assets/icons/svg/")], // 这里已经将src/icons/svg/下的svg全部导入，无需再单独导入],
   ],
   resolve: {
     alias: {
@@ -29,7 +26,7 @@ export default defineConfig({
       store: resolve("src/store"),
       utils: resolve("src/utils"),
     },
-    extensions:[".vue",".ts",".js"]
+    extensions: [".vue", ".ts", ".js"],
   },
   // server: {
   // 	//服务器主机名

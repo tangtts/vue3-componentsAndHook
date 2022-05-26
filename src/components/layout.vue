@@ -1,19 +1,18 @@
 <template>
   <el-container>
-    <div v-if="isMobile">
+    <div>
       <el-drawer
         :with-header="false"
         v-model="openDrawer"
         direction="ltr"
         size="auto"
-      
       >
         <my-aside> </my-aside>
       </el-drawer>
     </div>
-    <div v-else>
+    <!-- <div v-else>
       <my-aside> </my-aside>
-    </div>
+    </div> -->
     <el-container class="bg-white dark:bg-black">
       <el-header>
         <el-container>
@@ -50,22 +49,11 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { useStore } from "vuex";
-import myAside from "./common/Aside/index.vue";
+// import myAside from "./common/Aside/index.vue";
 import Breadcrumb from "./common/Breadcrumb/index.vue";
 import { Setting, Edit } from "@element-plus/icons-vue";
 let openDrawer = ref(false);
-let store = useStore();
-const isMobile = store.state.isMobile;
-const isCollapes = store.state.isCollapse;
-const clickCollapse = () => {
-  if (isMobile) {
-    openDrawer.value = true;
-    store.commit("setCollapseOpen");
-  } else {
-    store.commit("toggleCollapse");
-  }
-};
+const clickCollapse = () => {};
 </script>
 
 <style scoped lang="scss">

@@ -1,27 +1,22 @@
-# Vue 3 + Typescript + Vite
+# VUE3 TS PINA AXIOS ELEMENT-PLUS PNPM
 
-This template should help get you started developing with Vue 3 and Typescript in Vite.
+> 写在前面：写这个后台模板的原因是因为 我认为现在的后台模板的前端部分有些冗余，性能不够好，(虽然后台不需要什么性能),有很多配置是我没有用到的
 
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Vetur](https://marketplace.visualstudio.com/items?itemName=octref.vetur). Make sure to enable `vetur.experimental.templateInterpolationService` in settings!
-
-### If Using `<script setup>`
-
-[`<script setup>`](https://github.com/vuejs/rfcs/pull/227) is a feature that is currently in RFC stage. To get proper IDE support for the syntax, use [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar) instead of Vetur (and disable Vetur).
-
-## Type Support For `.vue` Imports in TS
-
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can use the following:
-
-### If Using Volar
-
-Run `Volar: Switch TS Plugin on/off` from VSCode command palette.
-
-### If Using Vetur
-
-1. Install and add `@vuedx/typescript-plugin-vue` to the [plugins section](https://www.typescriptlang.org/tsconfig#plugins) in `tsconfig.json`
-2. Delete `src/shims-vue.d.ts` as it is no longer needed to provide module info to Typescript
-3. Open `src/main.ts` in VSCode
-4. Open the VSCode command palette
-5. Search and run "Select TypeScript version" -> "Use workspace version"
+1. 动画
+   1. 渐入进出
+   2. 翻转
+   3. 左移右移
+2. 动态路由
+   1. 可以根据后台动态生成侧边栏路由(暂时由 `json` 模拟)
+   2. 静态路由( 无需后端返回)
+3. 组件
+   1. table 组件
+   2. form 组件
+   3. button 组件
+   4. 弹窗组件
+   5. 动画组件
+4. 响应式设计
+5. 超时锁屏
+6. 国际化
+7. 更改全局样式
+8. 根据用户偏爱设置 `黑色` 和 `白色` 模式
