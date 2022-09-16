@@ -16,8 +16,8 @@ hero:
       text: 开始
       link: /examples/button/
     - theme: alt
-      text: 在 Gitee 上查看
-      link: https://gitee.com/geeksdidi/kittyui
+      text: 在 Github 上查看
+      link: https://github.com/tangtts/vue3-componentsAndHook.git
 
 features:
   - icon: 💡
