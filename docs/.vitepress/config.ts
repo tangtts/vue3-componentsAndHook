@@ -27,6 +27,10 @@ export default {
               text: "Button按钮",
               link: "/examples/button/",
             },
+            {
+              text: "无限滚动",
+              link: "/examples/virtual/",
+            },
           ],
         },
       ],

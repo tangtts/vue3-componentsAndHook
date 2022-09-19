@@ -5,10 +5,12 @@ import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 const resolve = (dir: string) => path.join(__dirname, dir);
+import vueJsx from '@vitejs/plugin-vue-jsx';
 export default defineConfig({
   base: "./",
   plugins: [
     vue(),
+    vueJsx(),
     AutoImport({
       imports: ["vue"],
       resolvers: [ElementPlusResolver()],
@@ -26,7 +28,10 @@ export default defineConfig({
       store: resolve("src/store"),
       utils: resolve("src/utils"),
     },
-    extensions: [".vue", ".ts", ".js"],
+    extensions: [".vue", ".ts", ".js",".tsx"],
+  },
+  server:{
+    port:5221
   },
   // server: {
   // 	//服务器主机名

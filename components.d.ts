@@ -20,13 +20,19 @@ declare module '@vue/runtime-core' {
     ElFooter: typeof import('element-plus/es')['ElFooter']
     ElHeader: typeof import('element-plus/es')['ElHeader']
     ElMain: typeof import('element-plus/es')['ElMain']
+    Item: typeof import('./src/components/virtual/Item.vue')['default']
     Layout: typeof import('./src/components/Layout.vue')['default']
     Login: typeof import('./src/components/login.vue')['default']
     Menubar: typeof import('./src/components/common/Aside/menubar.vue')['default']
     Menubaritem: typeof import('./src/components/common/Aside/menubaritem.vue')['default']
+    MyItem: typeof import('./src/components/virtual/myItem.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SvgIcon: typeof import('./src/components/common/SvgIcon/index.vue')['default']
+    UserItem: typeof import('./src/components/virtual/userItem.vue')['default']
+    UseStorage: typeof import('./src/components/useStorage/index.vue')['default']
+    Virtual: typeof import('./src/components/virtual/index.vue')['default']
+    VirtualList: typeof import('./src/components/virtual/VirtualList.vue')['default']
   }
 }
 
