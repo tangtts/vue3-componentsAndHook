@@ -31,6 +31,10 @@ export default {
               text: "无限滚动",
               link: "/examples/virtual/",
             },
+            {
+              text: "八卦loading",
+              link: "/examples/baGua/",
+            },
           ],
         },
       ],

@@ -5,19 +5,40 @@
 
 
       <!-- <myComponent as="button" type="submit">点击</myComponent> -->
-      <virtualList />
-
+      <!-- <virtualList /> -->
+      <!-- <BaGua animationSpeed='1s' size="100"/> -->
+      <div v-bagua-loading="{size:100,animationSpeed:'1s'}">
+        1232131
+      </div>
     </el-config-provider>
   </div>
 </template>
 <script lang="ts" setup>
 // import myComponent from "./components/button/index"
-import virtualList from "./components/virtual/index.vue"
-import { defineComponent, onMounted, ref } from "vue";
+// import virtualList from "./components/virtual/index.vue"
+// import BaGua from './components/baGua/index.vue'
+import BaGua from './components/baGua/BaGua.vue'
+import { createApp, defineComponent, onMounted, ref } from "vue";
+import { ObjectDirective } from "vue"
 import zhCn from "element-plus/lib/locale/lang/zh-cn";
 import axios from "axios";
 const locale = ref(zhCn);
+const loadingInstance = createApp(BaGua)
+const instance = loadingInstance.mount(document.createElement('div'))
 
+const vBaguaLoading: ObjectDirective = {
+  mounted: (el, bindings,vnode) => {
+    // el 是当前绑定的元素
+    // instance 是引入的虚拟 dom，只有 $el
+    // 需要把 el.appendChild(instance.$el)
+   
+    if (bindings.value) {
+       instance.$props = bindings.value
+    }
+
+    el.appendChild(instance.$el)
+  },
+}
 
 </script>
 
