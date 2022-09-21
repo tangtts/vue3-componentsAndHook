@@ -35,6 +35,10 @@ export default {
               text: "八卦loading",
               link: "/examples/baGua/",
             },
+            {
+              text: "旋转大图",
+              link: "/examples/preview-img/",
+            },
           ],
         },
       ],
