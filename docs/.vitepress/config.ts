@@ -39,6 +39,10 @@ export default {
               text: "旋转大图",
               link: "/examples/preview-img/",
             },
+            {
+              text: "放大镜",
+              link: "/examples/magnifiers/",
+            },
           ],
         },
       ],

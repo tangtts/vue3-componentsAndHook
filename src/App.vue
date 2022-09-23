@@ -11,8 +11,9 @@
         1232131
       </div> -->
 
-<preview-img img="../docs/public/logo.png" v-model="show" />
-<el-button @click="show =!show" type="primary"> 打开 </el-button>
+      <!-- <preview-img img="../docs/public/logo.png" v-model="show" /> -->
+      <!-- <el-button @click="show =!show" type="primary"> 打开 </el-button> -->
+      <magnifiers/>
     </el-config-provider>
   </div>
 </template>
@@ -21,7 +22,8 @@
 // import virtualList from "./components/virtual/index.vue"
 // import BaGua from './components/baGua/index.vue'
 // import BaGua from './components/baGua/BaGua.vue'
-import previewImg from "./components/previewImage/index.vue"
+// import previewImg from "./components/previewImage/index.vue"
+import magnifiers from "./components/magnifiers/index.vue"
 import { createApp, defineComponent, onMounted, ref } from "vue";
 import { ObjectDirective } from "vue"
 import zhCn from "element-plus/lib/locale/lang/zh-cn";

@@ -12,7 +12,7 @@
   </div>
 
 <script setup>
-import useStorage from "/src/components/useStorage/index.vue"
+import useStorage from "../../../src/components/useStorage/index.vue"
 </script>
 
 

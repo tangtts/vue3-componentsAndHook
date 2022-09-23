@@ -25,6 +25,7 @@
   import {ref} from "vue"
   import previewImg from "../../../src/components/previewImage/index.vue"
   const show = ref(false)
+  </script>
 ```
 
 </details>
@@ -32,6 +33,7 @@
 
 				
 # 属性
+
 |  属性名   | 说明  |  类型 |  可选值 | 默认值
 |  :----:  | :----:  | :----:  | :----:  | :----:  | 
 | img  | 传入的图片 | string | --  | --- | 

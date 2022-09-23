@@ -8,7 +8,7 @@ module.exports = {
 
     },
   },
-  content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
+  purge: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   plugins: [
     // 会出现覆盖的问题
     function ({ addBase }) {
