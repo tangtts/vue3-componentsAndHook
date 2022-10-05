@@ -24,7 +24,7 @@
 import BaGua from './components/baGua/BaGua.vue'
 // import previewImg from "./components/previewImage/index.vue"
 import magnifiers from "./components/magnifiers/index.vue"
-import { createApp, defineComponent, onMounted, ref, createVNode, render } from "vue";
+import { createApp, defineComponent, onMounted, h,ref, createVNode, render } from "vue";
 import { ObjectDirective } from "vue"
 import zhCn from "element-plus/lib/locale/lang/zh-cn";
 import axios from "axios";
@@ -38,18 +38,24 @@ const show = ref(false)
 
 const vBaguaLoading = {
   mounted: (el, bindings, vnode) => {
-    const loadingInstance = createVNode(BaGua)
+    const loadingInstance = h(BaGua,{
+      size:bindings.value.size,
+      animationSpeed:bindings.value.animationSpeed
+    })
+    // 如果要注销，h(null,container)
+
     let containter = document.createElement('div')
     render(loadingInstance, containter)
+
     // el 是当前绑定的元素
     // instance 是引入的虚拟 dom，只有 $el
     // 需要把 el.appendChild(instance.$el)
-    if (bindings.value) {
-      let f = loadingInstance.component?.props
-      f!.size = bindings.value.size
-      f!.animationSpeed = bindings.value.animationSpeed
+    // if (bindings.value) {
+      // let f = loadingInstance.component?.props
+      // f!.size = bindings.value.size
+      // f!.animationSpeed = bindings.value.animationSpeed
       //  instance.$props = bindings.value
-    }
+    // }
 
     // el.appendChild(instance.$el)
     el.appendChild(containter)
