@@ -28,7 +28,7 @@ export default {
               link: "/examples/button/",
             },
             {
-              text: "无限滚动",
+              text: "虚拟列表",
               link: "/examples/virtual/",
             },
             {
@@ -42,6 +42,10 @@ export default {
             {
               text: "放大镜",
               link: "/examples/magnifiers/",
+            },
+            {
+              text: "无限滚动",
+              link: "/examples/infiniteScroll/",
             },
           ],
         },

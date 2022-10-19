@@ -1,8 +1,94 @@
+# 无限滚动
+滚动至底部时，滚动加载更多数据。
+> 虚拟滚动的主要原理 
+> 第一次先使用 new MutationObserver 进行填充,等填充完毕，即高度合适，(触底)就把 observe 删除掉  
+> 后续使用 带有 overflow:scroll/auto 的元素身上加上滚动，滚动一次，加载一次
+# 基础用法
+
+> 
+
+<infiniteScroll></infiniteScroll>
+
+<script  setup>
+  import infiniteScroll from "../../../src/components/infiniteScroll/index.vue" 
+</script>
+
+
+<details>
+
+<summary>展开查看</summary>
+
+```vue
+<template>
+  <div class="infinite-list-wrapper" style="overflow: auto">
+    <ul
+      v-infinite-scroll="load"
+      class="list"
+      :infinite-scroll-disabled="disabled"
+    >
+      <li v-for="i in count" :key="i" class="list-item">{{ i }}</li>
+    </ul>
+    <p v-if="loading">Loading...</p>
+    <p v-if="noMore">No more</p>
+  </div>
+</template>
+
+<script lang="ts" setup>
+import { computed, ref } from 'vue'
+
+const count = ref(10)
+const loading = ref(false)
+const noMore = computed(() => count.value >= 20)
+const disabled = computed(() => loading.value || noMore.value)
+const load = () => {
+  loading.value = true
+  setTimeout(() => {
+    count.value += 2
+    loading.value = false
+  }, 2000)
+}
+</script>
+
+<style lang="scss">
+.list {
+  li {
+    height: 50px;
+    margin: 10px;
+    background-color: lightblue;
+
+  }
+}
+</style>
+
+```
+</details>
+				
+# 属性
+
+|  属性名   | 说明  |  类型 |  可选值 | 默认值
+|  :----:  | :----:  | :-----:  | :----:  | :----:  | 
+| v-infinite-scroll  | 滚动到底部时，加载更多数据 | function | --  | -- | 
+| v-infinite-delay  | 节流时延，单位为ms | number | --  | 200 | 
+| v-infinite-distance  | 触发加载的距离阈值，单位为px |	number  | --  | 0 | 
+| v-infinite-immediate  | 是否立即执行加载方法，以防初始状态下内容无法撑满容器。 | boolean | --  | true | 
+
+# Source
+
+<details>
+
+<summary>展开查看</summary>
+
+```vue
 <template>
   <div>
     <div style="overflow:auto;height: 200px;">
-      <ul class="list" :infinite-scroll-delay="300" :infinite-scroll-distance="20" :infinite-scroll-immediate="true"
-        :infinite-scroll-disabled="disabled" v-infinite-scroll="load">
+      <ul class="list" 
+      :infinite-scroll-delay="300" 
+      :infinite-scroll-distance="20" 
+      :infinite-scroll-immediate="true"
+        :infinite-scroll-disabled="disabled"
+        v-infinite-scroll="load" 
+        >
         <li v-for="i in count" class="list-item">{{ i }}</li>
       </ul>
       <p v-if="loading">加载中...</p>
@@ -185,20 +271,20 @@ const disabled = computed(() => {
 
 const load = () => {
   loading.value = true
-  setTimeout(() => {
-    count.value += 2
-    loading.value = false
-  }, 1000)
-
+  count.value += 2
+  loading.value = false
 }
 </script>
 <style lang="scss">
 .list {
   li {
-    height: 50px;
+    height: 20px;
     margin: 10px;
     background-color: lightblue;
 
   }
 }
 </style>
+```
+
+</details>
