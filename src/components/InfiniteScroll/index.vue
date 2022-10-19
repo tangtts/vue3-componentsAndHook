@@ -11,10 +11,10 @@
   </div>
 </template>
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
-import type { ObjectDirective, FunctionDirective } from "vue"
+import { computed, nextTick, ref, VNode, watch, } from 'vue';
+import type { ObjectDirective, FunctionDirective, ComponentPublicInstance } from "vue"
 
-let count = ref(10),
+let count = ref(2),
   loading = ref(false)
 const noMore = computed(() => {
   return count.value >= 20
@@ -42,16 +42,25 @@ type TypeDefaultOption = Record<`infinite-scroll-${string}`, any>
 type defaultOptionKey<T> = {
   [K in keyof T as infinite<K>]: T[K]
 }
+let defaultOption = {
+  "delay": 500,
+  "immediate": true,
+  "disabled": false,
+  "distance": 0,
+}
 
-function getOptions(el: HTMLElement, defaultOption: TypeDefaultOption): defaultOptionKey<TypeDefaultOption> {
-  return Object.keys(defaultOption).reduce((map, attr) => {
+function getScrollOptions(el: HTMLElement, instance: ComponentPublicInstance): defaultOptionKey<TypeDefaultOption> {
+  return Object.keys(defaultOption).reduce((map, key) => {
     // 去除 infinite-scroll-
-    let newAttr = attr.slice(16);
-    let value = el.getAttribute(`infinite-scroll-${newAttr}`) ?? defaultOption[`infinite-scroll-${newAttr}`];
-    map[newAttr] = value
+    const attrVal = el.getAttribute(`infinite-scroll-${key}`) || ''
+    let value = instance[attrVal] ?? attrVal ?? defaultOption[key]
+    value = value === 'false' ? false : value
+
+    map[key] = value ?? defaultOption[`${key}`]
     return map
   }, {})
 }
+
 function getOverScrollEle(el: HTMLElement) {
   let reg = /(scroll)|(auto)/g;
   while (el != document.documentElement) {
@@ -81,62 +90,93 @@ function throttle(fn, delay = 200) {
     timer = setTimeout(() => {
       flag = true
       clearTimeout(timer!)
-      fn.apply(this, args)
+      fn.apply(window, args)
     }, delay)
   }
 }
 
-let scope = {
-  handleScope: ''
+const SCOPE = 'infinite-scroll'
+
+
+type InfiniteScrollCallback = () => void
+
+type InfiniteScrollEl = HTMLElement & {
+  [SCOPE]: {
+    container: HTMLElement | Window
+    containerEl: HTMLElement
+    instance: ComponentPublicInstance
+    delay: number // export for test
+    lastScrollTop: number
+    cb: InfiniteScrollCallback
+    onScroll: () => void
+    observer?: MutationObserver
+  }
 }
 
-let vInfiniteScroll: ObjectDirective & { defaultOption: TypeDefaultOption } = {
-  defaultOption: {
-    "infinite-scroll-delay": '200',
-    "infinite-scroll-immediate": false,
-    "infinite-scroll-disabled": false,
-    "infinite-scroll-distance": 0,
-  },
-  mounted(el: HTMLElement, bindings, vnode) {
-    let attrMap = getOptions(el, vInfiniteScroll.defaultOption);
-    let containter = getOverScrollEle(el) as HTMLElement & { handleScope: Function };
 
-    // TODO 需要立即执行
-    if (attrMap.immediate) {
+// el.scrollTop + el.offsetHeight + distance
+function handleScroll(el: InfiniteScrollEl, fn: InfiniteScrollCallback) {
+  const { instance, observer, container } = el[SCOPE]
+  const { disabled, distance } = getScrollOptions(el, instance)
+  // // 说明没有触动
+  if (disabled) return;
+  // @ts-ignore
+  if (container.scrollTop + container.clientHeight + Number(distance) >= container.scrollHeight) {
+    console.log("触底")
+    fn()
+  } else {
+    if (observer) {
+      (observer as MutationObserver).disconnect()
+      delete el[SCOPE].observer
+    }
+  }
+}
 
-      let observe = new MutationObserver(function (mutationsList, observer) {
-        // console.log(mutationsList, observer)
-      })
+
+// TODO 如果换成 这个类型的话, 会有警告，elementUI 不知道有没有
+// https://github.com/element-plus/element-plus/blob/dev/packages/components/infinite-scroll/src/index.ts
+// ObjectDirective<
+//   InfiniteScrollEl,
+//   InfiniteScrollCallback
+// >
+let vInfiniteScroll: ObjectDirective = {
+
+  async mounted(el, bindings) {
+    const { instance, value: cb } = bindings
+    let { delay, immediate } = getScrollOptions(el, instance!);
+    let container = getOverScrollEle(el) as HTMLElement;
+
+    let onScroll = handleScroll.bind(null, el, cb)
+
+    if (!instance) return
+    el[SCOPE] = {
+      container,
+      onScroll,
+      el,
+      instance,
+    }
+    if (immediate) {
+
+      let observe = new MutationObserver(onScroll)
+      el[SCOPE].observer = observe
       // subtree 可选
       // 当为 true 时，将会监听以 target 为根节点的整个子树。包括子树中所有节点的属性，而不仅仅是针对 target
-      observe.observe(containter, {
-        childList: true,
-        subtree: true
+      observe.observe(container, {
+        childList: true, // 儿子节点
+        subtree: true // 儿子的儿子
       })
+      onScroll()
     }
-    // el.scrollTop + el.offsetHeight + distance
-    function handleScroll(el: HTMLElement, fn: Function) {
-      // 说明没有触动
-      // let clientHeight = el.getBoundingClientRect().height
-      if (el.scrollTop + el.clientHeight + Number(attrMap.distance) >= el.scrollHeight) {
-        console.log("触底")
-        fn()
-      } else {
-        console.log(123)
-        containter.removeEventListener("scroll", containter[scope.handleScope])
-      }
-    }
-    // 给元素绑定
-    containter[scope.handleScope] = handleScroll;
-    // TODO watch 没有生效
-    watch(() => attrMap.disabled, (newVal) => {
-      console.log(newVal, "aadsf")
-      containter.removeEventListener("scroll", containter[scope.handleScope])
-    })
-
-    // containter?.addEventListener("load",throttle(handleScroll,attrMap.delay).bind(containter,bindings.value))
-    containter?.addEventListener("scroll", containter[scope.handleScope].bind(containter, containter, bindings.value))
+    container?.addEventListener("scroll", throttle(onScroll.bind(null, el, instance), delay))
+    console.log("🚀 ~ file: index.vue ~ line 165 ~ mounted ~ container", container);
   },
+  unmounted(el) {
+    const { onScroll, container } = el[SCOPE]
+    if (container) {
+      container.removeEventListener("scroll", onScroll)
+      el[SCOPE] = {}
+    }
+  }
 }
 
 const disabled = computed(() => {
@@ -145,10 +185,8 @@ const disabled = computed(() => {
 
 const load = () => {
   loading.value = true
-  setTimeout(() => {
-    count.value += 2
-    loading.value = false
-  }, 2000)
+  count.value += 2
+  loading.value = false
 }
 </script>
 <style lang="scss">

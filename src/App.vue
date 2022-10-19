@@ -12,9 +12,7 @@
       <!-- <el-button @click="show =!show" type="primary"> 打开 </el-button> -->
       <!-- <magnifiers/> -->
       <infinite-scroll/>
-      <div class="a"></div>
-     <el-input type="text"/>
-     <el-button type="primary" @mousedown.prevent>点击</el-button>
+     
     </el-config-provider>
   </div>
 </template>
@@ -27,7 +25,7 @@ import InfiniteScroll from './components/InfiniteScroll/index.vue'
 
 // import previewImg from "./components/previewImage/index.vue"
 import magnifiers from "./components/magnifiers/index.vue"
-import { createApp, defineComponent, onMounted, ref, createVNode, render } from "vue";
+import { createApp, defineComponent, onMounted, h,ref, createVNode, render } from "vue";
 import { ObjectDirective } from "vue"
 import zhCn from "element-plus/lib/locale/lang/zh-cn";
 import axios from "axios";

@@ -68,19 +68,15 @@ const instance = loadingInstance.mount(document.createElement('div'))
 // 修改
 const vBaguaLoading = {
   mounted: (el, bindings, vnode) => {
-    const loadingInstance = createVNode(BaGua)
+    const loadingInstance = h(BaGua,{
+      size:bindings.value.size,
+      animationSpeed:bindings.value.animationSpeed
+    })
     let containter = document.createElement('div')
     render(loadingInstance, containter)
     // el 是当前绑定的元素
     // instance 是引入的虚拟 dom，只有 $el
     // 需要把 el.appendChild(instance.$el)
-    if (bindings.value) {
-      let f = loadingInstance.component?.props
-      f!.size = bindings.value.size
-      f!.animationSpeed = bindings.value.animationSpeed
-      //  instance.$props = bindings.value
-    }
-
     // el.appendChild(instance.$el)
     el.appendChild(containter)
   },
