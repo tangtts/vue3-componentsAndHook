@@ -122,7 +122,6 @@ function handleScroll(el: InfiniteScrollEl, fn: InfiniteScrollCallback) {
   if (disabled) return;
   // @ts-ignore
   if (container.scrollTop + container.clientHeight + Number(distance) >= container.scrollHeight) {
-    console.log("触底")
     fn()
   } else {
     if (observer) {
@@ -189,7 +188,6 @@ const load = () => {
     count.value += 2
     loading.value = false
   }, 1000)
-
 }
 </script>
 <style lang="scss">
