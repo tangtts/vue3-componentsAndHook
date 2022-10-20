@@ -47,6 +47,10 @@ export default {
               text: "无限滚动",
               link: "/examples/infiniteScroll/",
             },
+            {
+              text: "旋转卡片",
+              link: "/examples/reverse-card/",
+            },
           ],
         },
       ],

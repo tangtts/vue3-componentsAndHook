@@ -11,8 +11,9 @@
       <!-- <preview-img img="../docs/public/logo.png" v-model="show" /> -->
       <!-- <el-button @click="show =!show" type="primary"> 打开 </el-button> -->
       <!-- <magnifiers/> -->
-      <infinite-scroll/>
-     
+      <!-- <infinite-scroll/> -->
+      
+<reverseCard/>
     </el-config-provider>
   </div>
 </template>
@@ -22,10 +23,10 @@
 // import BaGua from './components/baGua/index.vue'
 // import BaGua from './components/baGua/BaGua.vue'
 import InfiniteScroll from './components/InfiniteScroll/index.vue'
-
 // import previewImg from "./components/previewImage/index.vue"
 import magnifiers from "./components/magnifiers/index.vue"
-import { createApp, defineComponent, onMounted, h,ref, createVNode, render } from "vue";
+import reverseCard from "./components/reverse-card/index.vue"
+import { createApp, defineComponent, onMounted, h, ref, createVNode, render } from "vue";
 import { ObjectDirective } from "vue"
 import zhCn from "element-plus/lib/locale/lang/zh-cn";
 import axios from "axios";
@@ -70,11 +71,11 @@ body,
   margin: 0;
   padding: 0;
 }
-.a{
+
+.a {
   width: 100px;
   height: 100px;
   background-color: red;
-  box-shadow: 1px 1px 2px blue,-1px -1px 2px blue;
+  box-shadow: 1px 1px 2px blue, -1px -1px 2px blue;
 }
-
 </style>
