@@ -51,6 +51,10 @@ export default {
               text: "旋转卡片",
               link: "/examples/reverse-card/",
             },
+            {
+              text: "上传文件",
+              link: "/examples/upload/",
+            },
           ],
         },
       ],

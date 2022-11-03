@@ -12,8 +12,9 @@
       <!-- <el-button @click="show =!show" type="primary"> 打开 </el-button> -->
       <!-- <magnifiers/> -->
       <!-- <infinite-scroll/> -->
-      
-<reverseCard/>
+
+      <!-- <reverseCard /> -->
+     <my-upload/>
     </el-config-provider>
   </div>
 </template>
@@ -26,6 +27,7 @@ import InfiniteScroll from './components/InfiniteScroll/index.vue'
 // import previewImg from "./components/previewImage/index.vue"
 import magnifiers from "./components/magnifiers/index.vue"
 import reverseCard from "./components/reverse-card/index.vue"
+import myUpload from "./components/upload/index.vue"
 import { createApp, defineComponent, onMounted, h, ref, createVNode, render } from "vue";
 import { ObjectDirective } from "vue"
 import zhCn from "element-plus/lib/locale/lang/zh-cn";
