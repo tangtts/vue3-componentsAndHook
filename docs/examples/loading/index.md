@@ -1,6 +1,6 @@
 #  loading 图
 一个简单的 loading 图。
-> 仿照了 `element-plus`中的 loading 图 
+> 仿照了 `element-plus`中的 `loading` 图 
 > 有很多属性没有用上，比如`background-color`,`text`,`svg`等
 > 主要原理
  1. 使用`createApp`生成实例(loadingInstance),第一个参数为`vnode`,第二个参数为`props`
@@ -12,8 +12,6 @@
 
 <script setup>
   import loading from "../../../src/components/loading/index.vue" 
-
-  
 </script>
 
 <details>
