@@ -16,7 +16,6 @@
 <summary>展开查看</summary>
 
 ```vue
-
 <template>
   <div>
     <upload :on-success="onSuccess" :on-exceed="onExceed" :limit="3" :before-upload="onBeforeLoad" multiple

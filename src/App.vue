@@ -14,7 +14,8 @@
       <!-- <infinite-scroll/> -->
 
       <!-- <reverseCard /> -->
-     <my-upload/>
+     <!-- <my-upload/> -->
+     <Loading/>
     </el-config-provider>
   </div>
 </template>
@@ -28,12 +29,17 @@ import InfiniteScroll from './components/InfiniteScroll/index.vue'
 import magnifiers from "./components/magnifiers/index.vue"
 import reverseCard from "./components/reverse-card/index.vue"
 import myUpload from "./components/upload/index.vue"
+import Loading from "./components/loading/index.vue"
 import { createApp, defineComponent, onMounted, h, ref, createVNode, render } from "vue";
 import { ObjectDirective } from "vue"
 import zhCn from "element-plus/lib/locale/lang/zh-cn";
 import axios from "axios";
 const locale = ref(zhCn);
 const show = ref(false)
+
+
+
+
 
 
 // const instance = loadingInstance.mount(document.createElement('div'))
