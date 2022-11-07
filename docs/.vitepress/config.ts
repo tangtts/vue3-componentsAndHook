@@ -55,6 +55,10 @@ export default {
               text: "上传文件",
               link: "/examples/upload/",
             },
+            {
+              text: "laoding",
+              link: "/examples/loading/",
+            },
           ],
         },
       ],

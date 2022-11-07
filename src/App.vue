@@ -14,8 +14,8 @@
       <!-- <infinite-scroll/> -->
 
       <!-- <reverseCard /> -->
-     <!-- <my-upload/> -->
-     <Loading/>
+      <!-- <my-upload/> -->
+      <Loading />
     </el-config-provider>
   </div>
 </template>
