@@ -59,6 +59,10 @@ export default {
               text: "laoding",
               link: "/examples/loading/",
             },
+            {
+              text: "上传并且剪裁图片",
+              link: "/examples/jianCai/",
+            },
           ],
         },
       ],

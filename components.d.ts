@@ -10,6 +10,8 @@ declare module '@vue/runtime-core' {
     ElButton: typeof import('element-plus/es')['ElButton']
     ElButtonGroup: typeof import('element-plus/es')['ElButtonGroup']
     ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
+    ElImage: typeof import('element-plus/es')['ElImage']
+    ElInput: typeof import('element-plus/es')['ElInput']
     InfiniteScroll: typeof import('./src/components/InfiniteScroll/index.vue')['default']
     JianCaiUpload: typeof import('./src/components/jianCaiUpload/index.vue')['default']
     Loading: typeof import('./src/components/loading/index.vue')['default']
