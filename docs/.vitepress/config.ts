@@ -5,6 +5,7 @@ export default {
     nav: [
       { text: "组件", link: "/examples/button/" },
       { text: "hook", link: "/hook/useStorage/" },
+      { text: "directive", link: "/directive/clickOutside/" },
     ],
     socialLinks: [{ icon: "github", link: "https://github.com/tangtts/vue3-componentsAndHook.git" }],
     sidebar: {
@@ -15,6 +16,17 @@ export default {
             {
               text: "useStorage",
               link: "/hook/useStorage/",
+            },
+          ],
+        },
+      ],
+      "/directive/": [
+        {
+          text: "指令",
+          items: [
+            {
+              text: "clickoutside",
+              link: "/directive/clickOutside/",
             },
           ],
         },

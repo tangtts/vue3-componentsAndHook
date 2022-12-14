@@ -15,7 +15,9 @@
 
       <!-- <reverseCard /> -->
      <!-- <my-upload/> -->
-     <Loading/>
+     <clickOutside/>
+     <!-- <Loading/> -->
+     
     </el-config-provider>
   </div>
 </template>
@@ -30,15 +32,13 @@ import magnifiers from "./components/magnifiers/index.vue"
 import reverseCard from "./components/reverse-card/index.vue"
 import myUpload from "./components/upload/index.vue"
 import Loading from "./components/loading/index.vue"
+import clickOutside from "./components/clickOutside/index.vue"
 import { createApp, defineComponent, onMounted, h, ref, createVNode, render } from "vue";
-import { ObjectDirective } from "vue"
+import { ObjectDirective,FunctionDirective } from "vue"
 import zhCn from "element-plus/lib/locale/lang/zh-cn";
 import axios from "axios";
 const locale = ref(zhCn);
 const show = ref(false)
-
-
-
 
 
 
@@ -80,10 +80,4 @@ body,
   padding: 0;
 }
 
-.a {
-  width: 100px;
-  height: 100px;
-  background-color: red;
-  box-shadow: 1px 1px 2px blue, -1px -1px 2px blue;
-}
 </style>

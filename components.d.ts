@@ -6,6 +6,7 @@ import '@vue/runtime-core'
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     BaGua: typeof import('./src/components/baGua/baGua.vue')['default']
+    ClickOutside: typeof import('./src/components/clickOutside/index.vue')['default']
     Drag: typeof import('./src/components/upload/drag.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
