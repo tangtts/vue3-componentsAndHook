@@ -96,9 +96,6 @@ const resolveOptions = (options: LoadingOptions): LoadingOptionsResolved => {
 
   return {
     parent: target === document.body ? document.body : target,
-    background: options.background || '',
-
-    text: options.text || '',
     visible: options.visible ?? true,
     target,
   }
