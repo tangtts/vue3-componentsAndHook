@@ -14,11 +14,20 @@
     "lib": ["esnext", "dom"],
     "baseUrl": "./",
     "paths": {
-      "utils/*":["./src/utils/*"],
-      "@/*":["src/*"]
+      "utils/*": ["./src/utils/*"],
+      "@/*": ["src/*"]
     },
-    "types": ["element-plus/global","unplugin-vue-define-options/macros-global"]
+    "types": [
+      "element-plus/global",
+      "unplugin-vue-define-options/macros-global",
+    ]
   },
   "exclude": ["node_modules"],
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue","src/*.ts"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "src/*.ts"
+  ]
 }

@@ -1,18 +1,20 @@
-import { ExtractPropTypes } from 'vue';
+import { ExtractPropTypes, InjectionKey, provide, SetupContext } from 'vue';
 import { PropType } from 'vue';
 
-type Key = string | number
+export type Key = string | number
 
-export interface TreeNode extends Required<TreeOptions> {
+export interface TreeNode extends Required<TreeOption> {
   level:number
-  rowNode:TreeNode,
-  children:TreeNode[]
+  rowNode:TreeOption,
+  children:TreeNode[],
+  isLeaf:boolean,
+  
 }
 
-export interface TreeOptions  {
+export interface TreeOption  {
   label?:string
   key?:Key
-  children:TreeOptions[],
+  children?:TreeOption[],
   isLeaf?:boolean,
   [key:string]:unknown,
 }
@@ -28,11 +30,11 @@ type C<T extends object,V> = {
   [K in keyof F<T,V>]:K
 }[keyof F<T,V>]
 
-type J =C<G<TreeOptions>,string>
+type J =C<G<TreeOption>,string>
 
 export const TreeProps = {
   data:{
-   type: Array as PropType<TreeOptions[]>,
+   type: Array as PropType<TreeOption[]>,
    required:true
   },
   keyField:{
@@ -50,24 +52,31 @@ export const TreeProps = {
   defaultExpandKeys:{
     type:Array as PropType<Key[]>,
     default:()=>[]
-  }
+  },
+  selectKeys:{
+    type:Array as PropType<Key[]>,
+    default:()=>[]
+  },
+  selectable:Boolean,
+  multiple:Boolean,
+  onLoad:Function as PropType<(node:TreeOption)=>Promise< TreeOption[]>>,
 } as const;
 
-type L = {
-  a:string
+export const treeEmits = {
+  "update:selectKeys":(keys:Key[])=>keys
 }
 
- const F2 = {
-  a:String
-};
-
-let f:typeof F2 = {
-  a:String
+export interface TreeContext {
+  slots:SetupContext["slots"]
 }
+export const injectKey:InjectionKey<TreeContext>= Symbol();
 
-
-
-
-
+export const treeNodeContentProps = {
+  node:{
+    type:Object as PropType<TreeNode>,
+    required:true
+  },
+  
+}
 
 export type MytreeProps = ExtractPropTypes<typeof TreeProps>
