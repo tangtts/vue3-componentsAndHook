@@ -1,22 +1,19 @@
 <template>
   <div>
-    <TreeNodeItem
-     v-for="node in flattenTree" :key="node.key"
-     :node="node"
-     :isExpanded="isExpanded(node)"
-     @toggle="toggleExtend"
-     :loadingKeys="loadingKeysRef"
-     :selectKeys="selectKeysRef"
-     @select="handleSelect"
-     >
-      
-    </TreeNodeItem>
+    <VirtualList :remain="8" :size="40" :items="flattenTree">
+      <template #default="{ node }">
+        <TreeNodeItem :node="node" :isExpanded="isExpanded(node)" @toggle="toggleExtend" :loadingKeys="loadingKeysRef"
+          :selectKeys="selectKeysRef" @select="handleSelect">
+        </TreeNodeItem>
+      </template>
+    </VirtualList>
   </div>
 </template>
 <script lang="ts" setup>
 import { onMounted, ref, computed, reactive, watch, provide, useSlots } from "vue";
 import { TreeProps, TreeOption, TreeNode, Key, treeEmits, injectKey } from "./types";
 import TreeNodeItem from "./treeNode.vue"
+import VirtualList from "./virtualList";
 const props = defineProps(TreeProps);
 const tree = ref<TreeNode[]>([])
 
@@ -27,11 +24,11 @@ let treeOptions = {
   getKey(node: TreeNode): string {
     return node[props.keyField] as string
   },
-  getLabel(node:TreeNode): string {
+  getLabel(node: TreeNode): string {
     return node[props.labelField]
   }
 }
-function createTree(data: TreeOption[],parent?:TreeNode): TreeNode[] {
+function createTree(data: TreeOption[], parent?: TreeNode): TreeNode[] {
 
   function traversal(data, parent: TreeNode | null = null) {
     return data.map((node) => {
@@ -45,12 +42,12 @@ function createTree(data: TreeOption[],parent?:TreeNode): TreeNode[] {
         level: parent ? parent.level + 1 : 0
       }
       if (children.length > 0) {
-        treeNode.children = traversal(node.children,treeNode)
+        treeNode.children = traversal(node.children, treeNode)
       }
       return treeNode
     })
   }
-  const result: TreeNode[] = traversal(data,parent)
+  const result: TreeNode[] = traversal(data, parent)
   return result
 }
 
@@ -60,31 +57,31 @@ watch(() => props.data, (data: TreeOption[]) => {
   immediate: true
 });
 
- provide(injectKey,{
-  slots:useSlots()
+provide(injectKey, {
+  slots: useSlots()
 });
 
 const emits = defineEmits(treeEmits)
 const selectKeysRef = ref<Key[]>([])
-function handleSelect(node:TreeNode){
+function handleSelect(node: TreeNode) {
   // 来一个新的数组
   let keys = Array.from(selectKeysRef.value);
-  if(!props.selectable)return;
-  if(props.multiple){
-    let index  = keys.findIndex(key=>key == node.key)
-    if(index>-1){
-     keys.splice(index,1)
-    }else {
+  if (!props.selectable) return;
+  if (props.multiple) {
+    let index = keys.findIndex(key => key == node.key)
+    if (index > -1) {
+      keys.splice(index, 1)
+    } else {
       keys.push(node.key)
     }
-  }else {
-    if(keys.includes(node.key)){
+  } else {
+    if (keys.includes(node.key)) {
       keys = []
-    }else {
+    } else {
       keys = [node.key]
     }
   }
-  emits("update:selectKeys",keys)
+  emits("update:selectKeys", keys)
 }
 
 
@@ -100,26 +97,26 @@ watch(() => props.selectKeys, (data: Key[]) => {
 
 const expandKeysSet = ref(new Set(props.defaultExpandKeys));
 
-const isExpanded = function(node:TreeNode){
+const isExpanded = function (node: TreeNode) {
   return expandKeysSet.value.has(node.key)
 }
 
-function collapse(node:TreeNode){
+function collapse(node: TreeNode) {
   expandKeysSet.value.delete(node.key)
 }
 
 const loadingKeysRef = ref(new Set<Key>())
-function triggerLoading(node:TreeNode){
- 
-  if(!node.isLeaf){
-    const  loadingKeys =  loadingKeysRef.value;
-    if(!loadingKeys.has(node.key)){
+function triggerLoading(node: TreeNode) {
+
+  if (!node.isLeaf) {
+    const loadingKeys = loadingKeysRef.value;
+    if (!loadingKeys.has(node.key)) {
       loadingKeys.add(node.key)
       const onLoad = props.onLoad;
-      if(onLoad){
-         onLoad(node.rowNode).then(children=>{
-          node.rowNode.children  = children;
-          node.children = createTree(children,node);
+      if (onLoad) {
+        onLoad(node.rowNode).then(children => {
+          node.rowNode.children = children;
+          node.children = createTree(children, node);
           loadingKeys.delete(node.key)
         });
       }
@@ -127,16 +124,16 @@ function triggerLoading(node:TreeNode){
   }
 }
 
-function expand(node:TreeNode){
+function expand(node: TreeNode) {
   expandKeysSet.value.add(node.key)
   triggerLoading(node)
 }
 
 
-function toggleExtend(node:TreeNode){
-  if(expandKeysSet.value.has(node.key) && !loadingKeysRef.value.has(node.key)){
+function toggleExtend(node: TreeNode) {
+  if (expandKeysSet.value.has(node.key) && !loadingKeysRef.value.has(node.key)) {
     collapse(node)
-  }else {
+  } else {
     expand(node)
   }
 }
@@ -168,4 +165,6 @@ const flattenTree = computed(() => {
 })
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+
+</style>

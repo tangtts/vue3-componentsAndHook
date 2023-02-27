@@ -35,13 +35,11 @@ function handleLoad(node: TreeOption) {
 }
 
 
-
 const data = createData();
-
 
 function createData(level = 4, baseKey = ''): TreeOption[] {
   if (!level) return []
-  return Array.from({ length: level }, (_, index) => {
+  return Array.from({ length: level * 10 }, (_, index) => {
     const key = '' + baseKey + level + index
     const label = createLabel(level)
     return {
