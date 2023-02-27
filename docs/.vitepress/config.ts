@@ -67,6 +67,14 @@ export default {
               text: "上传文件",
               link: "/examples/upload/",
             },
+            {
+              text: "laoding",
+              link: "/examples/loading/",
+            },
+            {
+              text: "上传并且剪裁图片",
+              link: "/examples/jianCai/",
+            },
           ],
         },
       ],
