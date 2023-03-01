@@ -1,3 +1,6 @@
 {
-    "vetur.experimental.templateInterpolationService": true
+    "vetur.experimental.templateInterpolationService": true,
+    "editor.formatOnSave": true,
+"editor.defaultFormatter": "Vue.volar"
+    
 }

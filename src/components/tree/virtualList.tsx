@@ -1,4 +1,4 @@
-import { computed, defineComponent, onMounted, reactive, ref } from "vue"
+import { computed, defineComponent, onMounted, reactive, ref,watch } from "vue"
 export default defineComponent({
   name: 'VirtualList',
   props: {
@@ -23,15 +23,31 @@ export default defineComponent({
       end: props.remain,
       offset: 0
     });
+
+    // 可以预留的条数
+    const prev = computed(()=>{
+      return Math.min(state.start,props.remain)
+    });
+
+    const next = computed(()=>{
+      return Math.min(props.items.length - state.end,props.remain)
+    });
+
+
+
     let data = computed(() => {
-      return props.items.slice(state.start, state.end)
+      const start = state.start - prev.value;
+      const end = state.end + next.value;
+      return props.items.slice(start,end)
     })
     function handleScroll() {
       state.start = Math.floor( wrapper.value!.scrollTop / props.size);
       state.end = state.start + props.remain;
-      state.offset = state.start * props.size;
-      console.log(data.value)
+      state.offset = state.start * props.size - prev.value * props.size;
     }
+    watch(()=>props.items,()=>{
+      // scrollBar.value!.style.height = props.items.length * props.size + 'px';
+    })
     onMounted(() => {
       scrollBar.value!.style.height = props.items.length * props.size + 'px';
       wrapper.value!.style.height = props.remain * props.size + 'px';

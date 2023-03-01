@@ -1,68 +1,98 @@
 <template>
-  <div class="container pointer" @click="handelSelect(node)" :style="{ paddingLeft: `${node.level * 16}px` }">
-
-    <span @click="handleExtend(node)" :class="[{
-      'expanded': isExpanded && !node.isLeaf
-    }]" style="font-size: 12px;">
+  <div
+    class="container pointer"
+    @click="handelSelect(node)"
+    :style="{ paddingLeft: `${node.level * 16}px` }"
+  >
+    <span
+      @click.stop="handleExtend(node)"
+      :class="[
+        {
+          expanded: isExpanded && !node.isLeaf,
+        },
+      ]"
+      style="font-size: 12px"
+    >
       <LoadingIcon v-if="isLoading" />
       <TriangleIcon v-else />
     </span>
-    <span :class="{
-      isSelected: isSelected
-    }">
-    <TreeNodeContent :node="node"/>
+    <span
+      :key="node.key"
+      :class="{
+        isSelected: isSelected,
+      }"
+    >
+      <myCheckbox
+        v-if="checkable"
+        :indeterminate="indeterminate"
+        :modelValue="checked"
+        @update:modelValue="handleCheckChange"
+      >
+        <TreeNodeContent :node="node" />
+      </myCheckbox>
     </span>
   </div>
 </template>
 <script lang="ts" setup>
 import { onMounted, ref, computed, reactive, watch, PropType } from "vue";
 import { TreeProps, TreeOption, TreeNode, Key } from "./types";
-import TriangleIcon from "./icon"
-import LoadingIcon from "./loading"
-import TreeNodeContent from "./tree-node-content"
+import TriangleIcon from "./icon";
+import LoadingIcon from "./loading";
+import TreeNodeContent from "./tree-node-content";
 const props = defineProps({
   node: {
     type: Object as PropType<TreeNode>,
-    required: true
+    required: true,
   },
   isExpanded: {
-    type: Boolean
+    type: Boolean,
   },
   loadingKeys: {
     type: Object as PropType<Set<Key>>,
-    required: true
+    required: true,
   },
   selectKeys: {
-    type: Object as PropType<Key[]>
+    type: Object as PropType<Key[]>,
   },
+  defaultCheckedKeys: {
+    type: Object as PropType<Set<Key>>,
+    required: true,
+  },
+  checkable: Boolean,
+  cascade: Boolean,
+  checked: Boolean,
+  indeterminate: Boolean,
 });
 
-const isSelected = computed(() => {
-  return props.selectKeys?.includes(props.node.key)
-})
+const handleCheckChange = val => {
+  emits("check", props.node, val);
+};
 
+const isSelected = computed(() => {
+  return props.selectKeys?.includes(props.node.key);
+});
 
 const emits = defineEmits({
   toggle: (node: TreeNode) => node,
-  select: (node: TreeNode) => node
-})
+  select: (node: TreeNode) => node,
+  check: (node: TreeNode, val: String | Number | Boolean) => true,
+});
 
-const handelSelect = (node) => {
-  emits("select", node)
-}
+const handelSelect = node => {
+  emits("select", node);
+};
 
-const handleExtend = (node) => {
-  emits("toggle", node)
-}
+const handleExtend = node => {
+  emits("toggle", node);
+};
 
 const isLoading = computed(() => {
-  return props.loadingKeys.has(props.node.key)
-})
-
+  return props.loadingKeys.has(props.node.key);
+});
 </script>
 
 <style lang="scss" scoped>
-$state-prefix: 'is';
+$state-prefix: "is";
 
 @mixin when($state) {
   @at-root {
@@ -77,7 +107,6 @@ $state-prefix: 'is';
 }
 
 .container {
-  margin: 20px;
   font-size: 20px;
   line-height: 40px;
   display: flex;
