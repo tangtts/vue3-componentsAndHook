@@ -21,7 +21,7 @@
       <!-- <Loading/> -->
 
       <!-- <Loading /> -->
-      <JinCai/>
+      <!-- <JinCai/> -->
     </el-config-provider>
   </div>
 </template>
@@ -37,6 +37,7 @@ import reverseCard from "./components/reverse-card/index.vue"
 import Loading from "./components/loading/index.vue"
 import clickOutside from "./components/clickOutside/index.vue"
 import JinCai from "./components/jianCaiUpload/index.vue"
+import myTree from "./components/tree/index.vue"
 import { createApp, defineComponent, onMounted, h, ref, createVNode, render } from "vue";
 import { ObjectDirective, FunctionDirective } from "vue"
 import zhCn from "element-plus/lib/locale/lang/zh-cn";

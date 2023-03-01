@@ -1,39 +1,25 @@
 <template>
-  <div
-    class="container pointer"
-    @click="handelSelect(node)"
-    :style="{ paddingLeft: `${node.level * 16}px` }"
-  >
-    <span
-      @click.stop="handleExtend(node)"
-      :class="[
-        {
-          expanded: isExpanded && !node.isLeaf,
-        },
-      ]"
-      style="font-size: 12px"
-    >
+  <div class="container pointer" @click="handelSelect(node)" :style="{ paddingLeft: `${node.level * 16}px` }">
+    <span @click.stop="handleExtend(node)" :class="[
+      {
+        expanded: isExpanded && !node.isLeaf,
+      },
+    ]" style="font-size: 12px">
       <LoadingIcon v-if="isLoading" />
       <TriangleIcon v-else />
     </span>
-    <span
-      :key="node.key"
-      :class="{
-        isSelected: isSelected,
-      }"
-    >
-      <myCheckbox
-        v-if="checkable"
-        :indeterminate="indeterminate"
-        :modelValue="checked"
-        @update:modelValue="handleCheckChange"
-      >
+    <div :key="node.key" :class="{
+      isSelected: isSelected,
+    }">
+      <myCheckbox v-if="checkable" :indeterminate="indeterminate" :modelValue="checked"
+        @update:modelValue="handleCheckChange">
         <TreeNodeContent :node="node" />
       </myCheckbox>
-    </span>
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
+import myCheckbox from "../checkbox/index.vue"
 import { onMounted, ref, computed, reactive, watch, PropType } from "vue";
 import { TreeProps, TreeOption, TreeNode, Key } from "./types";
 import TriangleIcon from "./icon";
@@ -103,7 +89,7 @@ $state-prefix: "is";
 }
 
 @include when(Selected) {
-  background-color: rgb(167, 76, 76);
+  background-color: #b9b8d6;
 }
 
 .container {
@@ -119,7 +105,7 @@ $state-prefix: "is";
 
 .expanded {
   color: red;
-  display: inline-block;
+  display: block;
   transform: rotate(90deg);
   transform-origin: left center;
 }

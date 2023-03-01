@@ -2,19 +2,10 @@
   <div>
     <VirtualList :remain="8" :size="40" :items="flattenTree">
       <template #default="{ node }">
-        <TreeNodeItem
-          :node="node"
-          :indeterminate="isIndeterminate(node)"
-          :checkable="checkable"
-          :checked="isChecked(node)"
-          :defaultCheckedKeys="checkedKeysRefs"
-          :isExpanded="isExpanded(node)"
-          :loadingKeys="loadingKeysRef"
-          :selectKeys="selectKeysRef"
-          @toggle="toggleExtend"
-          @check="toggleCheck"
-          @select="handleSelect"
-        >
+        <TreeNodeItem :node="node" :indeterminate="isIndeterminate(node)" :checkable="checkable"
+          :checked="isChecked(node)" :defaultCheckedKeys="checkedKeysRefs" :isExpanded="isExpanded(node)"
+          :loadingKeys="loadingKeysRef" :selectKeys="selectKeysRef" @toggle="toggleExtend" @check="toggleCheck"
+          @select="handleSelect">
         </TreeNodeItem>
       </template>
     </VirtualList>
@@ -150,8 +141,8 @@ function updateCheckedKeys(node: TreeNode) {
 function toggleCheck(node: TreeNode, checked) {
   const checkKeys = toggle(node, checked);
   updateCheckedKeys(node);
-  // emits("update:checkedKeys", checked,
-  //   Array.from(checkKeys))
+  emits("update:checkedKeys", checked,
+    Array.from(checkKeys))
 }
 function findNode(key: Key) {
   let temp: any = {};

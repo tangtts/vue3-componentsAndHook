@@ -13,9 +13,9 @@ import { onMounted, ref, computed, reactive, watch } from "vue";
 import { checkboxProps, checkEmit } from "./types";
 const props = defineProps(checkboxProps)
 const emits = defineEmits(checkEmit)
-defineOptions({
-  name: 'myCheckbox'
-})
+// defineOptions({
+//   name: 'myCheckbox'
+// })
 const model = computed<String | Number | Boolean>({
   get() {
     return props.modelValue

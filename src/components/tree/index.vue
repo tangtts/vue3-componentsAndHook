@@ -1,8 +1,7 @@
 <template>
   <div class="m-20 border">
-    {{ defaultCheckedKeys }}
-    <Tree :data="data" v-model:selectKeys="model" selectable multiple checkable cascade
-      :default-checked-keys="defaultCheckedKeys" @update:checked-keys="updateCheckedKeys">
+    <Tree :data="data" v-model:selectKeys="model" selectable multiple checkable :default-checked-keys="defaultCheckedKeys"
+      :on-load="handleLoad" @update:checked-keys="updateCheckedKeys">
       <!--虚拟加载 :on-load="handleLoad" -->
       <template #default="{ node }">
         {{ node.label }}
@@ -14,15 +13,15 @@
 import Tree from "./tree.vue";
 import { onMounted, ref, computed, reactive, watch } from "vue";
 import { Key, TreeOption, TreeNode } from "./types";
-defineOptions({
-  name: "myTree",
-});
+// defineOptions({
+//   name: "myTree",
+// });
 
 const defaultCheckedKeys = ref<Key[]>(["40"]);
 const updateCheckedKeys = (node, val) => {
-  console.log(node, val);
+  defaultCheckedKeys.value = val;
 };
-const model = ref<Key[]>(["40", "4130"]);
+const model = ref<Key[]>(["40"]);
 
 // 懒加载
 function handleLoad(node: TreeOption) {

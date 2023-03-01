@@ -1,13 +1,22 @@
 export default {
+  markdown: {
+    lineNumbers: true,
+  },
   themeConfig: {
     siteTitle: false,
+
     logo: "/logo.png",
     nav: [
       { text: "组件", link: "/examples/button/" },
       { text: "hook", link: "/hook/useStorage/" },
       { text: "directive", link: "/directive/clickOutside/" },
     ],
-    socialLinks: [{ icon: "github", link: "https://github.com/tangtts/vue3-componentsAndHook.git" }],
+    socialLinks: [
+      {
+        icon: "github",
+        link: "https://github.com/tangtts/vue3-componentsAndHook.git",
+      },
+    ],
     sidebar: {
       "/hook/": [
         {
@@ -74,6 +83,10 @@ export default {
             {
               text: "上传并且剪裁图片",
               link: "/examples/jianCai/",
+            },
+            {
+              text: "Tree",
+              link: "/examples/tree/",
             },
           ],
         },
