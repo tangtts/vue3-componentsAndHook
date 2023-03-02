@@ -5,8 +5,8 @@ import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 const resolve = (dir: string) => path.join(__dirname, dir);
-import DefineOptions from 'unplugin-vue-define-options/vite'
-import vueJsx from '@vitejs/plugin-vue-jsx';
+import DefineOptions from "unplugin-vue-define-options/vite";
+import vueJsx from "@vitejs/plugin-vue-jsx";
 export default defineConfig({
   base: "./",
   plugins: [
@@ -19,7 +19,7 @@ export default defineConfig({
     Components({
       resolvers: [ElementPlusResolver()],
     }),
-    DefineOptions()
+    DefineOptions(),
   ],
   resolve: {
     alias: {
@@ -30,10 +30,10 @@ export default defineConfig({
       store: resolve("src/store"),
       utils: resolve("src/utils"),
     },
-    extensions: [".vue", ".ts", ".js",".tsx"],
+    extensions: [".vue", ".ts", ".js", ".tsx"],
   },
-  server:{
-    port:5221
+  server: {
+    port: 5221,
   },
   // server: {
   // 	//服务器主机名

@@ -13,7 +13,7 @@
 </template>
 <script lang="ts" setup>
 
-import { CSSProperties, PropType, StyleValue,ref,computed, toRaw, toRef,toRefs  } from 'vue';
+import { PropType, StyleValue, ref, computed, toRaw, toRef, toRefs } from 'vue';
 
 const props = defineProps({
   size: {
@@ -34,13 +34,13 @@ const addUnit = (str: string | number, unit = 'px') => {
   return str + unit
 }
 
-const baGuaContainerStyle = computed<CSSProperties>(() => {
+const baGuaContainerStyle = computed(() => {
   return {
-    width: addUnit( props.size),
+    width: addUnit(props.size),
     height: addUnit(props.size),
     "animation-duration": props.animationSpeed
   }
-}) as CSSProperties
+})
 
 
 

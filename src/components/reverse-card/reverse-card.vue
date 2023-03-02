@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="box" @click="handleClick" @mouseenter.prevent="handleMouseenter" :style="computedStyles()"
-      :class="isFont&&'flipped'">
+      :class="isFont && 'flipped'">
       <div class="card front">
         <slot name="front">前面</slot>
 
@@ -15,7 +15,7 @@
 </template>
  
 <script lang="ts" setup>
-import { CSSProperties, ref,watch } from 'vue';
+import { ref, watch } from 'vue';
 
 export type durationType = 'fast' | 'slow' | 'noraml' | number;
 export type trigger = 'click' | 'hover'
@@ -81,7 +81,7 @@ const formatPropsSize = (size: number | string): string => {
 /**
  * @return 计算 css 属性
  */
-const computedStyles:()=>CSSProperties = ()=>{
+const computedStyles: () => any = () => {
   let styles = {
     'transition-duration': formatPropsDuration(props.duration),
     width: formatPropsSize(props.width),
