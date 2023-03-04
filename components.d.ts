@@ -5,15 +5,14 @@ import '@vue/runtime-core'
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    AddKettleDynamically: typeof import('./src/components/AddKettleDynamically/index.vue')['default']
     BaGua: typeof import('./src/components/baGua/baGua.vue')['default']
     Checkbox: typeof import('./src/components/checkbox/index.vue')['default']
     ClickOutside: typeof import('./src/components/clickOutside/index.vue')['default']
     Drag: typeof import('./src/components/upload/drag.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
-    ElButtonGroup: typeof import('element-plus/es')['ElButtonGroup']
     ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
     ElSwitch: typeof import('element-plus/es')['ElSwitch']
-    Indev: typeof import('./src/components/checkbox/indev.vue')['default']
     InfiniteScroll: typeof import('./src/components/InfiniteScroll/index.vue')['default']
     JianCaiUpload: typeof import('./src/components/jianCaiUpload/index.vue')['default']
     Loading: typeof import('./src/components/loading/index.vue')['default']

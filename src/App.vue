@@ -1,8 +1,9 @@
 <template>
   <div class="dark">
     <el-config-provider :locale="locale">
+      <AddKettleDynamically />
       <!-- <myUpload /> -->
-      <myTree />
+      <!-- <myTree /> -->
       <!-- <myComponent as="button" type="submit">点击</myComponent> -->
       <!-- <virtualList /> -->
       <!-- <BaGua animationSpeed='1s' size="100"/> -->
@@ -38,6 +39,7 @@ import Loading from "./components/loading/index.vue"
 import clickOutside from "./components/clickOutside/index.vue"
 import JinCai from "./components/jianCaiUpload/index.vue"
 import myTree from "./components/tree/index.vue"
+import AddKettleDynamically from "./components/AddKettleDynamically/index.vue"
 import { createApp, defineComponent, onMounted, h, ref, createVNode, render } from "vue";
 import { ObjectDirective, FunctionDirective } from "vue"
 import zhCn from "element-plus/lib/locale/lang/zh-cn";

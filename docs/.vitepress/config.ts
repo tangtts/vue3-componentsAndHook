@@ -10,6 +10,7 @@ export default {
       { text: "组件", link: "/examples/button/" },
       { text: "hook", link: "/hook/useStorage/" },
       { text: "directive", link: "/directive/clickOutside/" },
+      { text: "有趣样式", link: "/css/AddKettleDynamically/" },
     ],
     socialLinks: [
       {
@@ -87,6 +88,17 @@ export default {
             {
               text: "Tree",
               link: "/examples/tree/",
+            },
+          ],
+        },
+      ],
+      "/css/": [
+        {
+          text: "样式",
+          items: [
+            {
+              text: "喝水目标",
+              link: "/css/AddKettleDynamically/",
             },
           ],
         },

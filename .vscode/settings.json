@@ -2,6 +2,7 @@
   "vetur.experimental.templateInterpolationService": true,
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "Vue.volar",
+  "scss.lint.unknownAtRules": "ignore",
   "[markdown]": {
     "editor.defaultFormatter": "yzhang.markdown-all-in-one"
   }
