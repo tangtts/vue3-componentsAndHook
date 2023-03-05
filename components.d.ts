@@ -6,6 +6,7 @@ import '@vue/runtime-core'
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AddKettleDynamically: typeof import('./src/components/AddKettleDynamically/index.vue')['default']
+    'AddKettleDynamically copy': typeof import('./src/components/AddKettleDynamically copy/index.vue')['default']
     BaGua: typeof import('./src/components/baGua/baGua.vue')['default']
     Checkbox: typeof import('./src/components/checkbox/index.vue')['default']
     ClickOutside: typeof import('./src/components/clickOutside/index.vue')['default']
@@ -23,6 +24,7 @@ declare module '@vue/runtime-core' {
     ReverseCard: typeof import('./src/components/reverse-card/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SidePicPreview: typeof import('./src/components/sidePicPreview/index.vue')['default']
     Tree: typeof import('./src/components/tree/index.vue')['default']
     TreeNode: typeof import('./src/components/tree/treeNode.vue')['default']
     Upload: typeof import('./src/components/upload/index.vue')['default']
