@@ -22,9 +22,13 @@
           {{ week }}</div>
       </header>
       <div class="content">
-        <div v-for="(date, index) of dates" :key="index" @click="chooseDate(years, months, date)" :class="['date', {
-          'active': isToday(date)
-        }]">
+        <div v-for="(date, index) of dates" :key="index" :name="isActive(date)" :date="date"
+          @click="chooseDate(years, months, date)" :class="['date', {
+            'isToday': isToday(date),
+            'isRange': isRange(date),
+            'isActive': isActive(date),
+            'isDisabled': isDisabled(date)
+          }]">
           {{ date }}
           <span v-if="isToday(date)" style="font-size: 12px;">今天</span>
         </div>
@@ -37,9 +41,13 @@ import { onMounted, ref, computed, reactive, watch, PropType } from "vue";
 
 const weeks = ["日", "一", "二", "三", "四", "五", "六"];
 const props = withDefaults(defineProps<{
-  modelValue: Date
+  modelValue: Date | string,
+  valueFormat: "timestamp" | "YYYY-MM-DD",
+  type: "date" | "range",
 }>(), {
-  modelValue: () => new Date()
+  modelValue: () => new Date(),
+  valueFormat: "timestamp",
+  type: "date"
 });
 
 const addOrMinus = (monthOryear: "month" | "year", addOrMinus: "+" | "-") => {
@@ -68,19 +76,28 @@ const addOrMinus = (monthOryear: "month" | "year", addOrMinus: "+" | "-") => {
   fn?.()
 }
 
-const emit = defineEmits({
-  "update:modelValue": (years: string, month: string, date: string) => {
-    return {
-      years,
-      month,
-      date
-    }
+function formatTimebyValueFormat({ year, month, date }) {
+  let timestamp = new Date(year, month, date)
+  if (props.valueFormat == "timestamp") {
+    return timestamp
+  } else if (props.valueFormat == "YYYY-MM-DD") {
+    return timestamp.getFullYear() + "-" + timestamp.getMonth() + "-" + timestamp.getDate()
+  } else {
+    return timestamp
   }
+}
+
+
+
+
+const emit = defineEmits({
+  "update:modelValue": (args: Date | string) => args
 })
 
 
-const chooseDate = (years, month, date) => {
-  emit("update:modelValue", years, month, date)
+const chooseDate = (year, month, date) => {
+  emit("update:modelValue", formatTimebyValueFormat({ year, month, date }));
+  setActiveDays(date)
 }
 
 
@@ -91,6 +108,52 @@ function setMonth(month) {
 const isToday = (date) => {
   const now = new Date();
   return now.getFullYear() == years.value && now.getMonth() + 1 == months.value && now.getDate() == date
+};
+const isRange = (date) => {
+  return activeRange.value.includes(date);
+};
+
+const isActive = (date) => {
+  return rangeArr.includes(date);
+};
+// TODO DISABLED 状态 ，选中的时候
+const isDisabled = (date) => {
+
+}
+
+
+
+const activeRange = ref<number[]>([]);
+
+const rangeArr: any[] = [];
+const setActiveDays = (date) => {
+  if (!rangeArr.length) {
+    rangeArr.push(date)
+  } else if (rangeArr.length == 1) {
+    if (rangeArr.at(0)! > date) {
+      rangeArr.unshift(date)
+    } else {
+      rangeArr.push(date)
+    }
+  } else {
+    // 如果已经有两个参数了
+    // 1. 当前值比最小值小
+    // 2. 最大值比当前值小
+    // 3. 处于两者中间 arr.pop() 
+    if (rangeArr.at(0)! > date) {
+      rangeArr.shift()
+      rangeArr.unshift(date)
+    } else {
+      rangeArr.pop()
+      rangeArr.push(date)
+    }
+  };
+  activeRange.value = []
+  if (rangeArr.length >= 1) {
+    for (let i = rangeArr.at(0)!; i <= rangeArr.at(1)!; i++) {
+      activeRange.value.push(i as number)
+    }
+  }
 }
 
 
@@ -102,7 +165,7 @@ const cteateDate = computed(() => {
 function formatUserTime() {
   let time = props.modelValue;
   if (typeof time == "string") {
-    time = new Date(props.modelValue)
+    time = new Date(time);
   }
   return {
     years: time.getFullYear(),
@@ -110,8 +173,8 @@ function formatUserTime() {
   }
 }
 
-const years = ref(props.modelValue.getFullYear())
-const months = ref(props.modelValue.getMonth() + 1)
+const years = ref(formatUserTime().years)
+const months = ref(formatUserTime().months)
 
 
 
@@ -175,13 +238,37 @@ let dates = computed(() => {
       @apply text-center inline-block text-lg py-2 w-[100px] cursor-pointer rounded-md;
 
       &:hover {
-        @apply bg-blue-400 text-white text-lg;
+        @apply bg-blue-400 text-white text-lg rounded-full;
       }
 
-      &.active {
+      &.isToday {
         @apply bg-red-400
       }
+
+
+
+      &.isRange {
+        @apply rounded-none bg-gray-200;
+
+      }
+
+      &.isActive {
+        @apply bg-green-400 text-white text-lg rounded-full;
+
+        &:is(.isRange) {
+          @apply rounded-r-none;
+        }
+
+        &~.isActive {
+          @apply rounded-r-full rounded-l-none;
+        }
+
+      }
     }
+
+    // .isActive.isRange {
+    //   @apply rounded-r-none;
+    // }
   }
 }
 </style>

@@ -10,12 +10,12 @@
 <script lang="ts" setup>
 import upload from "./upload.vue"
 import { ref } from 'vue';
-import {Props} from "./types"
+import { Props } from "./types"
 const drag = ref(true)
 const props = defineProps(Props)
 
 defineOptions({
-  name: 'myUpload',
+  name: 'uploadPage',
 });
 const onSuccess = () => {
   alert("success")

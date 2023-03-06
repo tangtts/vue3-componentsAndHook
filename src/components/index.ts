@@ -1,20 +1,20 @@
 import { checkboxPropsTypes } from "./checkbox/types";
-import myUpload from "components/upload/index.vue";
-import myTree from "components/tree/index.vue";
+import uploadPage from "components/upload/index.vue";
+import TreePage from "components/tree/index.vue";
 import myCheckbox from "components/checkbox/index.vue";
+import DatePickerPage from "components/date-picker/index.vue";
 import { UploadProps } from "./upload/types";
 
 import { App } from "vue";
 
 declare module "*.vue" {
   export interface GlobalComponents {
-    myUpload: UploadProps;
-    myTree: unknown;
+    uploadPage: UploadProps;
     myCheckbox: checkboxPropsTypes;
   }
 }
 
-const Components = [myUpload, myTree, myCheckbox];
+const Components = [uploadPage, TreePage, myCheckbox, DatePickerPage];
 
 function install(app: App) {
   Components.forEach(component => {
