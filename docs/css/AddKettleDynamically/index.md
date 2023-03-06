@@ -8,7 +8,7 @@
 <addKettleDynamically></addKettleDynamically>
 
 <script setup>
-  import addKettleDynamically from "../../../src/components/AddKettleDynamically/index.vue" 
+  import addKettleDynamically from "../../../src/components/addKettleDynamically/index.vue" 
   
 </script>
 
