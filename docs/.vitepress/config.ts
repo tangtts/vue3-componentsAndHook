@@ -10,7 +10,7 @@ export default {
       { text: "组件", link: "/examples/button/" },
       { text: "hook", link: "/hook/useStorage/" },
       { text: "directive", link: "/directive/clickOutside/" },
-      { text: "有趣样式", link: "/css/AddKettleDynamically/" },
+      { text: "有趣样式", link: "/css/addKettleDynamically/" },
     ],
     socialLinks: [
       {
@@ -99,6 +99,10 @@ export default {
             {
               text: "喝水目标",
               link: "/css/AddKettleDynamically/",
+            },
+            {
+              text: "图片预览",
+              link: "/css/sidePicPreview/",
             },
           ],
         },

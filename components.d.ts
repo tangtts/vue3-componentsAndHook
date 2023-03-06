@@ -6,7 +6,6 @@ import '@vue/runtime-core'
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AddKettleDynamically: typeof import('./src/components/AddKettleDynamically/index.vue')['default']
-    'AddKettleDynamically copy': typeof import('./src/components/AddKettleDynamically copy/index.vue')['default']
     BaGua: typeof import('./src/components/baGua/baGua.vue')['default']
     Checkbox: typeof import('./src/components/checkbox/index.vue')['default']
     ClickOutside: typeof import('./src/components/clickOutside/index.vue')['default']
@@ -14,6 +13,7 @@ declare module '@vue/runtime-core' {
     ElButton: typeof import('element-plus/es')['ElButton']
     ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
     ElSwitch: typeof import('element-plus/es')['ElSwitch']
+    'Index copy': typeof import('./src/components/sidePicPreview/index copy.vue')['default']
     InfiniteScroll: typeof import('./src/components/InfiniteScroll/index.vue')['default']
     JianCaiUpload: typeof import('./src/components/jianCaiUpload/index.vue')['default']
     Loading: typeof import('./src/components/loading/index.vue')['default']

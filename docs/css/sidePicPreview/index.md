@@ -1,5 +1,27 @@
+# 图片预览
+---
+> 点击侧边图片预览
+> 利用`cloneNode` 在原先的基础上复制了一张图片，位移到原先图片可视区域的`left/top`
+> 然后移动到 `视图中间`  
+> 使用 `v-show / v-if`均无法实现这样的效果，按理来说是可以的
+# 效果
+> 
+>
+
+<sidePicPreview></sidePicPreview>
+
+<script setup>
+  import sidePicPreview from "../../../src/components/sidePicPreview/index.vue" 
+  
+</script>
+
+<details>
+
+<summary>展开查看</summary>
+
+```vue
 <template>
-  <div>
+  <div style="height:800px;">
     <div>
       <img class="item" title="图片" v-for="(pic, index) in pics" :key="index" :ref="setBoxRef" :src="pic"
         @click="doClick(pic, index)" />
@@ -36,9 +58,10 @@ const originalPosition = {
   top: 0
 }
 const closeModal = () => {
-
+  if (sideActiveImg.value) {
+    sideActiveImg.value.style.opacity = '1'
+  }
   assetsElement(sideActiveImg.value)
-  sideActiveImg.value.style.opacity = '1'
   assetsElement(mask.value)
   mask.value.style.visibility = "hidden";
 
@@ -49,12 +72,10 @@ const closeModal = () => {
   ]);
   setTimeout(() => {
     assetsElement(mask.value)
-    mask.value.innerHTML = "";
-
+    mask.value.innerHTML = ""
   }, 500)
 }
 const cloneNodeRef = ref<HTMLElement | null>(null)
-
 
 const doClick = async (pic: string, index: number) => {
   const currentPic = imgRefs.value[index];
@@ -66,7 +87,6 @@ const doClick = async (pic: string, index: number) => {
   cloneNodeRef.value = cloneNode;
   cloneNode.classList.add("innerImg")
   mask.value?.appendChild(cloneNode);
-
 
   const { offsetWidth } = currentPic
   const { left, top } = currentPic.getBoundingClientRect();
@@ -128,16 +148,17 @@ onMounted(() => {
   
 <style lang="scss" scoped>
 .item {
-  @apply py-2 cursor-pointer w-[100px] transition-all duration-1000;
+  @apply py-2 cursor-pointer w-[240px];
 }
 
 .mask {
-  @apply fixed top-0 left-0 w-screen h-screen invisible;
-  // background-color: rgba(0, 0, 0, 0.5);
+  @apply fixed top-0 left-0 w-screen h-screen z-10 invisible;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .innerImg {
   @apply absolute transition-all duration-1000;
 }
 </style>
- 
+```
+</details>
