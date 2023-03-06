@@ -9,6 +9,7 @@ declare module '@vue/runtime-core' {
     BaGua: typeof import('./src/components/baGua/baGua.vue')['default']
     Checkbox: typeof import('./src/components/checkbox/index.vue')['default']
     ClickOutside: typeof import('./src/components/clickOutside/index.vue')['default']
+    DatePicker: typeof import('./src/components/date-picker/index.vue')['default']
     Drag: typeof import('./src/components/upload/drag.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']

@@ -1,7 +1,8 @@
 <template>
   <div class="dark">
     <el-config-provider :locale="locale">
-      <sidePicPreview />
+      <date-picker></date-picker>
+      <!-- <sidePicPreview /> -->
       <!-- <myUpload /> -->
       <!-- <myTree /> -->
       <!-- <myComponent as="button" type="submit">点击</myComponent> -->
@@ -41,6 +42,7 @@ import JinCai from "./components/jianCaiUpload/index.vue"
 import myTree from "./components/tree/index.vue"
 import AddKettleDynamically from "./components/AddKettleDynamically/index.vue"
 import sidePicPreview from "./components/sidePicPreview/index.vue"
+import datePicker from "./components/date-picker/index.vue"
 import { createApp, defineComponent, onMounted, h, ref, createVNode, render } from "vue";
 import { ObjectDirective, FunctionDirective } from "vue"
 import zhCn from "element-plus/lib/locale/lang/zh-cn";
