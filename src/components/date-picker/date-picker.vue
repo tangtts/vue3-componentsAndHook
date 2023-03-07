@@ -6,9 +6,9 @@
       </div>
       <div @click="addOrMinus('month', '-')">
         <img class="icon" src="./left-month.png" alt="left-month">
-      </div> {{ years }} 年 ------ {{
-        months
-      }}月
+      </div> {{ tempTime.year }} 年 ------ {{
+        tempTime.month + 1
+      }}月 -- {{ tempTime.date }}
       <div @click="addOrMinus('month', '+')">
         <img class="icon" src="./right-month.png" alt="left-month">
       </div>
@@ -18,26 +18,27 @@
     </header>
     <main>
       <header class="weekContainer">
-        <div class="week" v-for="(week, index) of weeks" :key="index">
+        <div class="cell week" v-for="(week, index) of weeks" :key="index">
           {{ week }}</div>
       </header>
-      <div class="content">
-        <div v-for="(date, index) of dates" :key="index" :name="isActive(date)" :date="date"
-          @click="chooseDate(years, months, date)" :class="['date', {
-            'isToday': isToday(date),
-            'isRange': isRange(date),
-            'isActive': isActive(date),
-            'isDisabled': isDisabled(date)
+      <div>
+        <div v-for="i of 6" :key="i" class="row">
+          <span @click="chooseDate(getCurrentDate(i, j))" v-for="j of 7" :key="j" :class="['cell', {
+            isCurrentMonth: isCurrentMonth(getCurrentDate(i, j)),
+            isToday: isToday(getCurrentDate(i, j)),
+            isSelect: props.type.date ? isSelect(getCurrentDate(i, j)) : false,
+            isRange: props.type.range ? isRange(getCurrentDate(i, j)) : false
           }]">
-          {{ date }}
-          <span v-if="isToday(date)" style="font-size: 12px;">今天</span>
+            {{ getCurrentDate(i, j).getDate() }}
+          </span>
         </div>
+
       </div>
     </main>
   </div>
 </template>
 <script lang="ts" setup>
-import { onMounted, ref, computed, reactive, watch, PropType } from "vue";
+import { onMounted, ref, computed, reactive, watch, PropType, toRaw } from "vue";
 
 const weeks = ["日", "一", "二", "三", "四", "五", "六"];
 const props = withDefaults(defineProps<{
@@ -49,167 +50,131 @@ const props = withDefaults(defineProps<{
   valueFormat: "timestamp",
   type: "date"
 });
+const emit = defineEmits<{
+  (e: "update:modelValue", args: Date | string | number): any
+}>()
+
+const getCurrentDate = (i, j): Date => {
+  return visableData.value[(i - 1) * 7 + (j - 1)]
+}
+const isCurrentMonth = (date: Date) => {
+  return tempTime.year == date.getFullYear() && tempTime.month == date.getMonth()
+}
+
+const isToday = (date: Date) => {
+  const now = new Date();
+  return now.getFullYear() == date.getFullYear() && now.getMonth() == date.getMonth() && now.getDate() == date.getDate()
+};
+// TODO 单选 / 多选
+const isSelect = (date: Date) => {
+  return tempTime.year == date.getFullYear() && tempTime.month == date.getMonth() && tempTime.date == date.getDate()
+}
+
+const isRange = (date: Date) => {
+  let arr = chooseDateArr.value, min = Math.min(...arr), max = Math.max(...arr), time = date.getTime();
+  return min < time && time < max
+}
+
 
 const addOrMinus = (monthOryear: "month" | "year", addOrMinus: "+" | "-") => {
-  let time = cteateDate.value;
+  let time = new Date(tempTime.year, tempTime.month, tempTime.date);
 
   let map = new Map([])
   map.set('year+', function () {
-    years.value = ++years.value;
+    tempTime.year = time.getFullYear() + 1;
   })
   map.set('year-', function () {
-    years.value = --years.value;
+    tempTime.year = time.getFullYear() - 1;
   })
 
   map.set('month+', function () {
-    let m = ++months.value;
+    let m = time.getMonth() + 1;
     const c = time.setMonth(m);
-    months.value = setMonth(c);
+    tempTime.month = new Date(c).getMonth();
   })
 
   map.set('month-', function () {
-    let m = --months.value;
-    months.value = setMonth(time.setMonth(m));
+    let m = time.getMonth() - 1;
+    const c = time.setMonth(m);
+    tempTime.month = new Date(c).getMonth();
   })
 
   let fn = map.get(monthOryear + addOrMinus) as Function;
   fn?.()
 }
-
-function formatTimebyValueFormat({ year, month, date }) {
-  let timestamp = new Date(year, month, date)
+// 根据用户传入的 valueFormat 返回给他
+function formatTimebyValueFormat(date: Date) {
   if (props.valueFormat == "timestamp") {
-    return timestamp
+    return date.getTime()
   } else if (props.valueFormat == "YYYY-MM-DD") {
-    return timestamp.getFullYear() + "-" + timestamp.getMonth() + "-" + timestamp.getDate()
+    return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
   } else {
-    return timestamp
+    return date
   }
 }
-
-
-
-
-const emit = defineEmits({
-  "update:modelValue": (args: Date | string) => args
-})
-
-
-const chooseDate = (year, month, date) => {
-  emit("update:modelValue", formatTimebyValueFormat({ year, month, date }));
-  setActiveDays(date)
+let chooseDateArr = ref<number[]>([])
+function setChooseData(date: Date) {
+  chooseDateArr.value.push(date.getTime())
 }
 
 
-function setMonth(month) {
-  return new Date(month).getMonth() || 12;
-}
-
-const isToday = (date) => {
-  const now = new Date();
-  return now.getFullYear() == years.value && now.getMonth() + 1 == months.value && now.getDate() == date
-};
-const isRange = (date) => {
-  return activeRange.value.includes(date);
-};
-
-const isActive = (date) => {
-  return rangeArr.includes(date);
-};
-// TODO DISABLED 状态 ，选中的时候
-const isDisabled = (date) => {
-
+const chooseDate = (date: Date) => {
+  emit("update:modelValue", formatTimebyValueFormat(date));
+  setChooseData(date)
 }
 
 
-
-const activeRange = ref<number[]>([]);
-
-const rangeArr: any[] = [];
-const setActiveDays = (date) => {
-  if (!rangeArr.length) {
-    rangeArr.push(date)
-  } else if (rangeArr.length == 1) {
-    if (rangeArr.at(0)! > date) {
-      rangeArr.unshift(date)
-    } else {
-      rangeArr.push(date)
-    }
-  } else {
-    // 如果已经有两个参数了
-    // 1. 当前值比最小值小
-    // 2. 最大值比当前值小
-    // 3. 处于两者中间 arr.pop() 
-    if (rangeArr.at(0)! > date) {
-      rangeArr.shift()
-      rangeArr.unshift(date)
-    } else {
-      rangeArr.pop()
-      rangeArr.push(date)
-    }
-  };
-  activeRange.value = []
-  if (rangeArr.length >= 1) {
-    for (let i = rangeArr.at(0)!; i <= rangeArr.at(1)!; i++) {
-      activeRange.value.push(i as number)
-    }
+function formatUserTime(date: Date | string) {
+  if (typeof date == "string") {
+    date = new Date(date);
   }
-}
-
-
-const cteateDate = computed(() => {
-  const time = new Date(years.value, months.value);
-  return time
-})
-
-function formatUserTime() {
-  let time = props.modelValue;
-  if (typeof time == "string") {
-    time = new Date(time);
-  }
+  // new Date(2023-2-1) month = 1
   return {
-    years: time.getFullYear(),
-    months: time.getMonth(),
+    year: date.getFullYear(),
+    month: date.getMonth(),
+    date: date.getDate()
   }
-}
-
-const years = ref(formatUserTime().years)
-const months = ref(formatUserTime().months)
+};
 
 
+// 创建一个不断页面切换显示的year,会一直改变
+let tempTime = reactive({
+  year: formatUserTime(props.modelValue).year,
+  month: formatUserTime(props.modelValue).month,
+  date: formatUserTime(props.modelValue).date
+});
 
-let timeArr: number[] = []
+watch(() => props.modelValue, (newVal) => {
+  tempTime.year = formatUserTime(newVal).year;
+  tempTime.month = formatUserTime(newVal).month;
+  tempTime.date = formatUserTime(newVal).date;
+})
+
+
+let timeArr: Date[] = []
 const ONE_DAY_TIME = 24 * 60 * 60 * 1000;
 
-let dates = computed(() => {
+let visableData = computed(() => {
+  // 直接循环 42 个
   timeArr = []
-  let times = cteateDate.value;
+  let times = new Date(tempTime.year, tempTime.month, tempTime.date);
   let year = times.getFullYear()
-  // 找这个月的第一天是周几
   let currentMonth = times.getMonth();
-  let currentMonthFirstDate = new Date(year, currentMonth - 1, 1);
-  // 当前月有多少天
-  let currentMonthHasDays = new Date(year, currentMonth, 0).getDate();
+  // 1号是周几
+  let currentMonthFirstDay = new Date(year, currentMonth, 1)
+  let currentMonthFirstDayDate = currentMonthFirstDay.getDay() ?? 7;
+  let currentMonthFirstDayTime = currentMonthFirstDay.getTime();
 
-  let currentMonthFirstDay = currentMonthFirstDate.getDay();
-  // 把上个月的最后几号放入；
-  let lastTime = currentMonthFirstDate.getTime() - currentMonthFirstDay * ONE_DAY_TIME
-  let lastMonthLastDay = new Date(lastTime).getDate(); // 26;
+  // 向前推这么多天
+  let frontDays = currentMonthFirstDayTime - currentMonthFirstDayDate * ONE_DAY_TIME;
 
-
-  for (let i = 0; i < currentMonthFirstDay; i++) {
-    timeArr.push(i + lastMonthLastDay)
-  }
-  for (let i = 1; i <= currentMonthHasDays; i++) {
-    timeArr.push(i)
-  }
-  // 这个月的最后一天是周几
-  const currentMonthLastDay = new Date(year, currentMonth - 1, currentMonthHasDays).getDay();
-  for (let i = 1; i < 7 - currentMonthLastDay; i++) {
-    timeArr.push(i)
+  for (let i = 0; i < 42; i++) {
+    timeArr.push(new Date(frontDays + i * ONE_DAY_TIME))
   }
   return timeArr
 });
+
+
 </script>
 <style lang="scss" scoped>
 .date-picker {
@@ -224,51 +189,40 @@ let dates = computed(() => {
   }
 
   .weekContainer {
-    @apply flex justify-center items-center py-2;
-
-    .week {
-      @apply flex-1 text-red-400 text-center text-lg
-    }
+    @apply flex justify-evenly items-center py-2;
   }
 
-  .content {
-    @apply flex items-end flex-wrap;
+  .row {
+    @apply flex justify-evenly items-center
+  }
 
-    .date {
-      @apply text-center inline-block text-lg py-2 w-[100px] cursor-pointer rounded-md;
+  .cell {
+    @apply text-black text-center text-lg w-[40px] h-[40px] flex items-center justify-center cursor-pointer;
 
-      &:hover {
-        @apply bg-blue-400 text-white text-lg rounded-full;
-      }
-
-      &.isToday {
-        @apply bg-red-400
-      }
-
-
-
-      &.isRange {
-        @apply rounded-none bg-gray-200;
-
-      }
-
-      &.isActive {
-        @apply bg-green-400 text-white text-lg rounded-full;
-
-        &:is(.isRange) {
-          @apply rounded-r-none;
-        }
-
-        &~.isActive {
-          @apply rounded-r-full rounded-l-none;
-        }
-
-      }
+    &:not(.isCurrentMonth) {
+      @apply text-gray-400;
     }
 
-    // .isActive.isRange {
-    //   @apply rounded-r-none;
-    // }
+    &.week {
+      @apply cursor-pointer text-black;
+    }
+
+    &.isToday {
+      @apply rounded-full text-blue-500 font-bold;
+    }
+
+    &.isSelect {
+      @apply bg-blue-400 text-white
+    }
+
+    // 只有是当前月才有 hover 效果
+    &:hover:is(.isCurrentMonth):not(.isSelect) {
+      @apply text-blue-300;
+    }
+
+    &.isRange {
+      @apply rounded-none bg-gray-200;
+    }
   }
 }
 </style>
