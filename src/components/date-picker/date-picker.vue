@@ -24,12 +24,17 @@
       <div>
         <div v-for="i of 6" :key="i" class="row">
           <span @click="chooseDate(getCurrentDate(i, j))" v-for="j of 7" :key="j" :class="['cell', {
-            isCurrentMonth: isCurrentMonth(getCurrentDate(i, j)),
-            isToday: isToday(getCurrentDate(i, j)),
-            isSelect: props.type.date ? isSelect(getCurrentDate(i, j)) : false,
-            isRange: props.type.range ? isRange(getCurrentDate(i, j)) : false
+            isRange: type == 'range' ? isRange(getCurrentDate(i, j)) : false,
+            isActive: type == 'range' ? isActive(getCurrentDate(i, j)) : false,
           }]">
-            {{ getCurrentDate(i, j).getDate() }}
+            <span :class="['date',
+              {
+                isCurrentMonth: isCurrentMonth(getCurrentDate(i, j)),
+                isToday: isToday(getCurrentDate(i, j)),
+                isSelect: type == 'date' ? isSelect(getCurrentDate(i, j)) : false,
+              }
+
+            ]"> {{ getCurrentDate(i, j).getDate() }}</span>
           </span>
         </div>
 
@@ -48,10 +53,11 @@ const props = withDefaults(defineProps<{
 }>(), {
   modelValue: () => new Date(),
   valueFormat: "timestamp",
-  type: "date"
+  type: "date",
 });
 const emit = defineEmits<{
-  (e: "update:modelValue", args: Date | string | number): any
+  (e: "update:modelValue", args: Date | string | number): any,
+  (e: "selectRange", args: Date[]): any,
 }>()
 
 const getCurrentDate = (i, j): Date => {
@@ -72,9 +78,12 @@ const isSelect = (date: Date) => {
 
 const isRange = (date: Date) => {
   let arr = chooseDateArr.value, min = Math.min(...arr), max = Math.max(...arr), time = date.getTime();
-  return min < time && time < max
+  return min <= time && time <= max
 }
-
+const isActive = (date: Date) => {
+  let arr = chooseDateArr.value, time = date.getTime();
+  return arr.includes(time)
+}
 
 const addOrMinus = (monthOryear: "month" | "year", addOrMinus: "+" | "-") => {
   let time = new Date(tempTime.year, tempTime.month, tempTime.date);
@@ -114,13 +123,41 @@ function formatTimebyValueFormat(date: Date) {
 }
 let chooseDateArr = ref<number[]>([])
 function setChooseData(date: Date) {
-  chooseDateArr.value.push(date.getTime())
+  const time = date.getTime()
+  if (!chooseDateArr.value.length) {
+    chooseDateArr.value.push(time)
+  } else if (chooseDateArr.value.length == 1) {
+    let min = chooseDateArr.value.at(0)!;
+    if (min < time) {
+      chooseDateArr.value.push(time)
+    } else {
+      chooseDateArr.value.unshift(time)
+    }
+  } else {
+    // 已经有两个值了
+    let min = chooseDateArr.value.at(0)!;
+    let max = chooseDateArr.value.at(1)!;
+    if (time < min) {
+      chooseDateArr.value.shift()
+      chooseDateArr.value.unshift(time)
+    } else {
+      chooseDateArr.value.pop();
+      chooseDateArr.value.push(time);
+    }
+  }
 }
 
 
 const chooseDate = (date: Date) => {
-  emit("update:modelValue", formatTimebyValueFormat(date));
   setChooseData(date)
+  if (props.type == "date") {
+    emit("update:modelValue", formatTimebyValueFormat(date));
+  } else {
+    let arr = chooseDateArr.value.map(date => {
+      return formatTimebyValueFormat(new Date(date))
+    }) as Date[];
+    emit("selectRange", arr)
+  }
 }
 
 
@@ -193,35 +230,46 @@ let visableData = computed(() => {
   }
 
   .row {
-    @apply flex justify-evenly items-center
+    @apply flex justify-evenly items-center;
   }
 
   .cell {
-    @apply text-black text-center text-lg w-[40px] h-[40px] flex items-center justify-center cursor-pointer;
-
-    &:not(.isCurrentMonth) {
-      @apply text-gray-400;
-    }
-
-    &.week {
-      @apply cursor-pointer text-black;
-    }
-
-    &.isToday {
-      @apply rounded-full text-blue-500 font-bold;
-    }
-
-    &.isSelect {
-      @apply bg-blue-400 text-white
-    }
-
-    // 只有是当前月才有 hover 效果
-    &:hover:is(.isCurrentMonth):not(.isSelect) {
-      @apply text-blue-300;
-    }
+    @apply text-black text-center text-lg flex-1 h-[40px] flex cursor-pointer justify-center items-center;
 
     &.isRange {
       @apply rounded-none bg-gray-200;
+    }
+
+    &.isActive {
+      @apply bg-blue-200;
+    }
+
+    .date {
+
+      @apply w-[40px] aspect-square flex items-center justify-center;
+
+      &:not(.isCurrentMonth) {
+        @apply text-gray-400;
+      }
+
+      &.week {
+        @apply cursor-pointer text-black;
+      }
+
+      &.isToday {
+        @apply rounded-full text-blue-500 font-bold;
+      }
+
+      &.isSelect {
+        @apply bg-blue-400 text-white rounded-full;
+      }
+
+      // 只有是当前月才有 hover 效果
+      &:hover:is(.isCurrentMonth):not(.isSelect) {
+        @apply text-blue-300;
+      }
+
+
     }
   }
 }
