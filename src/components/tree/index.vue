@@ -13,9 +13,9 @@
 import Tree from "./tree.vue";
 import { onMounted, ref, computed, reactive, watch } from "vue";
 import { Key, TreeOption, TreeNode } from "./types";
-defineOptions({
-  name: "TreePage",
-});
+// defineOptions({
+//   name: "TreePage",
+// });
 
 const defaultCheckedKeys = ref<Key[]>(["40"]);
 const updateCheckedKeys = (node, val) => {

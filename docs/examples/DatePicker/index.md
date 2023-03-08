@@ -1,3 +1,182 @@
+# 一个日历组件
+
+1.  可以传入`type`,可选值为`date| range`,`date`智能选择一个日期，`range` 可以选择多个
+2.  可以传入`format`,表示回显数据类型， 可选值为`yyyy-mm-dd| timestamp`
+3.  找到这个月的1号是周几，然后回退这么多天作为初始值，遍历 42，形成一个`Array<Date>`
+4.  遍历到页面上是一个一个的`Date` 的结构，包含很多信息，可以方便做后续处理
+5.  是否是当前月，是否在选择日期的里面，是否是选中 都是基于`Date`的这种结构
+
+---
+   巧妙之处在于,一方面是形成 `7 * 6` 的结构，另一方面是一个`Date` 类型，包含信息较多，方便后续 
+  
+  <details>
+
+   ```vue
+  <template>
+    <div v-for="i of 6" :key="i">
+      <span v-for="j of 7" :key="j">
+        {{visableData.value[(i - 1) * 7 + (j - 1)]}}
+      </span>
+    </div>
+  </template>
+  ```
+  </details>
+
+# 基础用法
+
+<datePicker></datePicker>
+
+<script setup>
+  import datePicker from "../../../src/components/date-picker/index.vue" 
+</script>
+
+# 属性
+
+| 属性名  |    说明    |  类型  |   可选值   |  默认值   |
+| :-----: | :--------: | :----: | :--------: | :-------: |
+|  type   |    类型    | string |    date    |   range   | date       |
+| format  | 回显的类型 | string | yyyy-mm-dd | timestamp | yyyy-mm-dd |
+| v-model |  初始数据  |  Date  |   string   |    --     | -          |
+# 事件
+|    事件名     |      说明       |  参数  |
+| :-----------: | :-------------: | :----: |
+| @select-range | range的回显数据 | Date[] |
+
+
+<details>
+
+<summary>展开查看</summary>
+
+```vue
+<template>
+    <el-form size="large">
+      <el-form-item label="type">
+        <el-radio-group v-model="form.type">
+          <el-radio label="date"></el-radio>
+          <el-radio label="range"></el-radio>
+        </el-radio-group>
+      </el-form-item>
+
+      <el-form-item label="value-format">
+        <el-radio-group v-model="form.format">
+          <el-radio label="timestamp"></el-radio>
+          <el-radio label="YYYY-MM-DD"></el-radio>
+        </el-radio-group>
+      </el-form-item>
+
+      <el-form-item label="result">
+        <span class="result"> {{ form.type == "date" ? date : range }}</span>
+      </el-form-item>
+
+      <el-form-item label="date-picker">
+        <date-picker :value-format="form.format" :type="form.type" v-model="date" @select-range="getRange"></date-picker>
+      </el-form-item>
+
+    </el-form>
+</template>
+<script lang="ts" setup>
+import DatePicker from "./date-picker.vue"
+import { onMounted, ref, computed, reactive, watch } from "vue";
+defineOptions({
+  name: "DatePickerPage"
+})
+
+const date = ref(new Date());
+const range = ref<Date[]>();
+const getRange = (date: Date[]) => {
+  range.value = date;
+}
+const form = reactive<{
+  format: "YYYY-MM-DD" | 'timestamp',
+  type: "date" | 'range',
+}>({
+  format: "YYYY-MM-DD",
+  type: "date"
+})
+</script>
+
+<style lang="scss" scoped>
+.result {
+  @apply font-bold text-orange-500 text-2xl
+}
+</style>
+
+```
+</details>
+
+<details>
+<summary>核心逻辑</summary>
+
+## 1. 根据用户的传入进行格式化为一个`Date[]` 进行渲染页面
+> 在一般做法中，先定义数组`dateArr` 会先计算这个月的第一天是周几，然后倒退几天，`dateArr`push 这几天
+> 再计算这个月有多少天，然后再`push` 这个月的所有天数
+> 然后再计算这个月最后一号是周几，然后 `7 - 周几`,继续`push`这几天  
+> 不采用这种方法，因为： 
+> 1. 计算步骤有点多 
+> 2. 这个 date-picker 高度可能是不固定的  
+> 
+> 目前的做法是：
+> 1. 先定义数组`dateArr`, 先计算这个月的第一天是周几，然后倒退几天，把它当做初始值  
+> 2. 最多有 `7 * 6 = 42`个`Date`,因为`31(天) / 7(一周) = 4.42`, 这个`0.42`可能在上 / 下，所以是 `6行`
+> 3. 遍历 `42` 
+```ts {11-23}
+let timeArr: Date[] = []
+// 一天的毫秒数
+const ONE_DAY_TIME = 24 * 60 * 60 * 1000;
+let visableData = computed(() => {
+  // 直接循环 42 个
+  timeArr = []
+  let times = new Date(tempTime.year, tempTime.month, tempTime.date);
+  let year = times.getFullYear()
+  let currentMonth = times.getMonth();
+  // 1号是周几
+  let currentMonthFirstDay = new Date(year, currentMonth, 1);
+  // 周日 是 0
+  let currentMonthFirstDayDate = currentMonthFirstDay.getDay() ?? 7;
+  // 毫秒数
+  let currentMonthFirstDayTime = currentMonthFirstDay.getTime();
+
+  // 向前推这么多天
+  let frontDays = currentMonthFirstDayTime - currentMonthFirstDayDate * ONE_DAY_TIME;
+
+  for (let i = 0; i < 42; i++) {
+    timeArr.push(new Date(frontDays + i * ONE_DAY_TIME))
+  }
+  return timeArr
+});
+```
+
+## 渲染页面
+因为要渲染成 `7 * 6` 排布,所以可以使用`visableData.value[(i - 1) * 7 + (j - 1)]` 
+具体可以使用 `数学归纳法总结` 
+
+```vue
+<template>
+  <div v-for="i of 6" :key="i">
+    <span v-for="j of 7" :key="j"  @click="chooseDate(getCurrentDate(i, j))">
+      {{getCurrentDate(i,j)}}
+    </span>
+  </div>
+</template>
+<script setup>
+const getCurrentDate = (i, j): Date => {
+  return visableData.value[(i - 1) * 7 + (j - 1)]
+}
+const chooseDate =(date:Date)=>{
+  // xxxx
+}
+</script>
+```
+
+## 其他逻辑
+因为 `getCurrentDate(i, j)` 里面是 `Date` 结构，里面包含了很多信息，可以方便对后续处理
+</details>
+
+<details>
+
+<summary>完整代码</summary>
+
+```vue
 <template>
   <div class="date-picker">
     <header class="header">
@@ -274,3 +453,6 @@ let visableData = computed(() => {
   }
 }
 </style>
+
+```
+</details>

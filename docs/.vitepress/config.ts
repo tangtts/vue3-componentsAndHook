@@ -89,6 +89,10 @@ export default {
               text: "Tree",
               link: "/examples/tree/",
             },
+            {
+              text: "Date-Picker",
+              link: "/examples/DatePicker/",
+            },
           ],
         },
       ],
