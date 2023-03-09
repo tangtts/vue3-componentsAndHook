@@ -1,7 +1,8 @@
 <template>
   <div class="dark">
     <el-config-provider :locale="locale">
-      <datePickerPage></datePickerPage>
+      <!-- <datePickerPage></datePickerPage> -->
+      <flip />
       <!-- <sidePicPreview /> -->
       <!-- <myUpload /> -->
       <!-- <myTree /> -->

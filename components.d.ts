@@ -24,6 +24,8 @@ declare module '@vue/runtime-core' {
     ElSelect: typeof import('element-plus/es')['ElSelect']
     ElSlider: typeof import('element-plus/es')['ElSlider']
     ElSwitch: typeof import('element-plus/es')['ElSwitch']
+    Filp: typeof import('./src/components/filp/index.vue')['default']
+    Flip: typeof import('./src/components/flip/index.vue')['default']
     InfiniteScroll: typeof import('./src/components/InfiniteScroll/index.vue')['default']
     JianCaiUpload: typeof import('./src/components/jianCaiUpload/index.vue')['default']
     Loading: typeof import('./src/components/loading/index.vue')['default']
