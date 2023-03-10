@@ -2,7 +2,8 @@
   <div class="dark">
     <el-config-provider :locale="locale">
       <!-- <datePickerPage></datePickerPage> -->
-      <flip />
+      <!-- <flip /> -->
+      <filp />
       <!-- <sidePicPreview /> -->
       <!-- <myUpload /> -->
       <!-- <myTree /> -->

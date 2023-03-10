@@ -14,7 +14,10 @@ import infiniteScroll from "components/infiniteScroll/index.vue";
 import magnifiers from "components/magnifiers/index.vue";
 import reverseCard from "components/reverse-card/index.vue";
 import previewImg from "components/previewImage/index.vue";
-import flip from "components/flip/index.vue";
+import picFlip from "components/flip/pic.vue";
+import cardListFlip from "components/flip/cardList.vue";
+import itemsListFlip from "components/flip/liList.vue";
+import filp from "components/flip/index.vue";
 
 declare module "*.vue" {
   export interface GlobalComponents {
@@ -38,7 +41,10 @@ const Components: Array<{ name: string; component: Component }> = [
   { name: "magnifiers", component: magnifiers },
   { name: "reverseCard", component: reverseCard },
   { name: "previewImg", component: previewImg },
-  { name: "flip", component: flip },
+  { name: "picFlip", component: picFlip },
+  { name: "cardListFlip", component: cardListFlip },
+  { name: "itemsListFlip", component: itemsListFlip },
+  { name: "filp", component: filp },
 ];
 
 function install(app: App) {

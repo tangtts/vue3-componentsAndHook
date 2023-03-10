@@ -35,9 +35,7 @@ const shuffle = arr => {
   let ret = arr.slice();
   for (let i = 0; i < ret.length; i++) {
     let j = getRandomInt(0, i);
-    let t = ret[i];
-    ret[i] = ret[j];
-    ret[j] = t;
+    [ret[i], ret[j]] = [ret[j], ret[i]];
   }
   return ret;
 };

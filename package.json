@@ -12,6 +12,7 @@
     "@element-plus/icons-vue": "^1.1.4",
     "@types/node": "^16.11.26",
     "element-plus": "^2.1.8",
+    "mockjs": "^1.1.0",
     "sass": "^1.49.11",
     "sass-loader": "^12.6.0",
     "vite-plugin-style-import": "^1.4.1",

@@ -32,6 +32,27 @@ let SISTERS = [
   "https://pic2.zhimg.com/v2-1008cd2c72129809cc348cdc04310475_r.jpg",
 ];
 
+let emojis = [
+  "1️⃣",
+  "👬",
+  "😱",
+  "😓",
+  "😻",
+  "🙅‍♂️",
+  "😔",
+  "😄",
+  "😊",
+  "❌",
+  "👴",
+  "🇨🇳",
+  "🔟",
+  "😍",
+  "🤤",
+  "👌",
+  "🏓",
+  "🏃‍♀️",
+];
+
 let initialSize = 8;
 let randomSize = [1, 2, 3, 4];
 
@@ -47,4 +68,4 @@ function getSisterGenerator() {
     return source.splice(0, randomSize[size]);
   };
 }
-export { SISTERS, getSisterGenerator };
+export { SISTERS, getSisterGenerator, emojis };

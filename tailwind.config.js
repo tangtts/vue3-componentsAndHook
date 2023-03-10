@@ -1,13 +1,12 @@
 const colors = require("tailwindcss/colors");
 module.exports = {
   darkMode: "class",
-  // theme: {
-  //   extend: {
-  //     colors,
-  //     lightBlue:{}
-  //   },
-  // },
   content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
+  theme: {
+    container: {
+      padding: "2rem",
+    },
+  },
   plugins: [
     // 会出现覆盖的问题
     function ({ addBase }) {
