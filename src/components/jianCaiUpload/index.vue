@@ -3,12 +3,12 @@
     <div class="chooseArea">
       <input type="file" @change="changeInput" />
       <div>
-        <img :src="chooseSrc" ref="imageRef" alt=""/>
+        <img :src="chooseSrc" ref="imageRef" alt="" />
       </div>
     </div>
 
-    <div v-if="chooseSrc">
-      <div style="position: relative;" @mousemove="handleMouseMove" @mousedown="handleMouseDown"
+    <div v-if="chooseSrc" style="margin-top:20px;">
+      <div style="position: relative;margin-bottom: 10px;" @mousemove="handleMouseMove" @mousedown="handleMouseDown"
         @mouseup="handleMouseUp">
         <canvas width="300" height="300" style="border:2px dashed blue" ref="canvasRef"></canvas>
         <div class="center"></div>
@@ -16,11 +16,11 @@
       <el-button-group>
         <el-button @click="ZoomOrShrink('zoom')">放大</el-button>
         <el-button @click="ZoomOrShrink('shrink')">缩小</el-button>
-        <el-button @click="confirm" >确定</el-button>
+        <el-button @click="confirm">确定</el-button>
       </el-button-group>
     </div>
 
-    <div v-if="avatarSrc">
+    <div v-if="avatarSrc" style="margin-top:30px;">
       <img :src="avatarSrc" ref="avatarRef" class="avatar" alt="">
       <el-button @click="upload" type="warning">上传</el-button>
     </div>
@@ -160,7 +160,8 @@ const handleMouseUp = (e: MouseEvent) => {
 
 .avatar {
   border: 2px solid pink;
-  width: 100px;
-  height: 100px;
+  width: 200px;
+  height: 200px;
+  margin-bottom: 10px;
 }
 </style>

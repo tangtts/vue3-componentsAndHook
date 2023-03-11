@@ -1,13 +1,11 @@
 
-# 一个简单的上传图片并且剪裁图片的功能
-> 由于在`vite` 中用不了`Buffer`，一直没有解决，所以最后一步上传没有做
-> 1. 利用 `input:file` 类型找到`files` ，然后通过 `new FileReader().readAsDataURL` jinxing读取，读取中有一个回调对象`e.target?.result` 赋值给 图片的`src` 属性
-> 2. 使用 `canvas`  渲染 图片实例，这个是第一张图片
-> 3. 使用 `canvas` 开始截图，截图面积是中间的小黄方块`100 * 100` ,通过`canvas`中的`putImageData` 方法 赋值图片,`toDataURL` 转化成`base64` 
-> 4. **由于在`vitepress`中使用不了`getContext` ,效果显示不出来**
-
+# 剪裁图片
+ 1. 利用 `input:file` 类型找到`files` ，然后通过 `new FileReader().readAsDataURL` jinxing读取，读取中有一个回调对象`e.target?.result` 赋值给 图片的`src` 属性
+ 2. 使用 `canvas`  渲染 图片实例，这个是第一张图片
+ 3. 使用 `canvas`中的`getImageData`方法 开始截图，截图面积是中间的小黄方块`100 * 100` ,通过`canvas`中的`putImageData` 方法 赋值图片url,`toDataURL` 转化成`base64` 
+---
 # 基础用法
-
+> 
 <JianCai></JianCai>
 
 <script setup>
@@ -30,10 +28,10 @@
 
     <div v-if="chooseSrc">
       <div 
-        style="position: relative;" 
-        @mousemove="handleMouseMove" 
-        @mousedown="handleMouseDown"
-        @mouseup="handleMouseUp">
+          style="position: relative;" 
+          @mousemove="handleMouseMove" 
+          @mousedown="handleMouseDown"
+          @mouseup="handleMouseUp">
         <canvas 
           width="300" 
           height="300" 
@@ -63,7 +61,7 @@ const position = reactive({
   startX: 0,
   startY: 0,
   startDrag: false,
-
+// 上次的位置
   lastLeft: 0,
   lastTop: 0
 })

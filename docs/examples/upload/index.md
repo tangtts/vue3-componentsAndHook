@@ -1,7 +1,10 @@
 # 上传
 通过点击或者拖拽上传文件。
-> 其实可以扩展很多，但是没必要,总体来说比较简单  
-> *time:2022/11/3 4:21*
+仿照[`element-plus`](https://github.com/element-plus/element-plus/blob/125f5f4650/packages/components/upload/index.ts)实现
+> 其实可以扩展很多，但是没必要,总体来说比较简单
+::: tip
+ element-plus 站在巨人的肩膀，很多思想都是从它的源码中借鉴而来
+:::
 # 基础用法
 
 <upload></upload>
@@ -45,13 +48,13 @@ const onBeforeLoad = (file) => {
 </details>
 				
 # 属性
-|  属性名  |       说明        |  类型   |   可选值   | 默认值 |
-| :------: | :---------------: | :-----: | :--------: | :----: |
-|  on-success  |    文件上传成功时的钩子      | function  |     --     |   否   |
-|  on-exceed   |  当超出限制时，执行的钩子函数   | function  |     --     |  否     |
-| before-upload | 上传文件之前的钩子 | function | - | [] |
-| limit | 允许上传文件的最大数量 | number | - | -  |
-| file-list / v-model:file-list | 默认上传文件 | UploadUserFile[] | - | [] |
+|            属性名             |             说明             |       类型       | 可选值 | 默认值 |
+| :---------------------------: | :--------------------------: | :--------------: | :----: | :----: |
+|          on-success           |     文件上传成功时的钩子     |     function     |   --   |   否   |
+|           on-exceed           | 当超出限制时，执行的钩子函数 |     function     |   --   |   否   |
+|         before-upload         |      上传文件之前的钩子      |     function     |   -    |   []   |
+|             limit             |    允许上传文件的最大数量    |      number      |   -    |   -    |
+| file-list / v-model:file-list |         默认上传文件         | UploadUserFile[] |   -    |   []   |
 
 # Source
 

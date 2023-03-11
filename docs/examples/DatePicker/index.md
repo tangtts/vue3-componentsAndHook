@@ -1,4 +1,4 @@
-# 一个日历组件
+# 日历组件
 
 1.  可以传入`type`,可选值为`date| range`,`date`智能选择一个日期，`range` 可以选择多个
 2.  可以传入`format`,表示回显数据类型， 可选值为`yyyy-mm-dd| timestamp`
@@ -24,10 +24,10 @@
 
 # 基础用法
 
-<datePicker></datePicker>
+<datePickerPage></datePickerPage>
 
 <script setup>
-  import datePicker from "../../../src/components/date-picker/index.vue" 
+  import datePickerPage from "../../../src/components/date-picker/index.vue" 
 </script>
 
 # 属性

@@ -1,57 +1,53 @@
-import { createApp, DirectiveBinding, ObjectDirective, ref } from "vue";
+import { createApp, DirectiveBinding, ObjectDirective, ref, h } from "vue";
 import maskComponent from "./loadingPage.vue";
 
-
 export type LoadingOptionsResolved = {
-  visible: boolean
-  target: HTMLElement
-  closed?: () => void
+  visible: boolean;
+  target: HTMLElement;
+  closed?: () => void;
   /**
    *
    * @type {string} 后面加上
    */
-  background?:string
-  text?:string | undefined
-}
+  background?: string;
+  text?: string | undefined;
+};
 
-export type LoadingOptions = Omit<LoadingOptionsResolved, 'closed'> 
+export type LoadingOptions = Omit<LoadingOptionsResolved, "closed">;
 
-export type LoadingBinding = boolean
+export type LoadingBinding = boolean;
 
-type LoadingInstance = ReturnType<typeof createLoadingComponent>
-const INSTANCE_KEY = Symbol('ElLoading')
-
-
+type LoadingInstance = ReturnType<typeof createLoadingComponent>;
+const INSTANCE_KEY = Symbol("ElLoading");
 
 interface ElementLoading extends HTMLElement {
   [INSTANCE_KEY]?: {
-    instance: LoadingInstance
-  }
+    instance: LoadingInstance;
+  };
 }
 
 function createLoadingComponent(options: LoadingOptionsResolved) {
-
   let afterLeaveTimer: number;
   const visible = ref(true);
 
   // 生成实例，同时传参
   const loadingInstance = createApp(maskComponent, {
     visible: visible.value,
-    handleAfterLeave: close
+    handleAfterLeave: close,
   });
 
-  const vm = loadingInstance.mount(document.createElement('div'));
+  const vm = loadingInstance.mount(document.createElement("div"));
 
   // 销毁实例
   function destroySelf() {
     vm.$el?.parentNode?.removeChild(vm.$el);
-    loadingInstance.unmount()
+    loadingInstance.unmount();
   }
 
   function close() {
-    clearTimeout(afterLeaveTimer)
-    afterLeaveTimer = window.setTimeout(destroySelf, 400)
-    options.closed?.()
+    clearTimeout(afterLeaveTimer);
+    afterLeaveTimer = window.setTimeout(destroySelf, 400);
+    options.closed?.();
   }
 
   return {
@@ -59,47 +55,47 @@ function createLoadingComponent(options: LoadingOptionsResolved) {
     close,
     vm,
     get $el(): HTMLElement {
-      return vm.$el
+      return vm.$el;
     },
-  }
+  };
 }
 
 export function loading(options: LoadingOptions): LoadingInstance {
   const instance = createLoadingComponent({
     ...options,
-    closed: () => { },
+    closed: () => {},
   });
   options.target.appendChild(instance.$el);
 
-  return instance
+  return instance;
 }
 
-
-function createInstance(el: ElementLoading, binding: DirectiveBinding<LoadingBinding>) {
+function createInstance(
+  el: ElementLoading,
+  binding: DirectiveBinding<LoadingBinding>
+) {
   const options: LoadingOptions = {
     visible: binding.value,
-    target: el
-  }
+    target: el,
+  };
   el[INSTANCE_KEY] = {
     instance: loading(options),
-  }
+  };
 }
-
 
 export const vMyLoading: ObjectDirective<ElementLoading, LoadingBinding> = {
   mounted(el, binding) {
     if (binding.value) {
-      createInstance(el, binding)
+      createInstance(el, binding);
     }
   },
   updated(el, binding) {
     const instance = el[INSTANCE_KEY];
-    // 如果有值，并且是 false 
+    // 如果有值，并且是 false
     if (binding.value) {
-      createInstance(el, binding)
+      createInstance(el, binding);
     } else {
-      instance?.instance.close()
+      instance?.instance.close();
     }
-  }
-
-}
+  },
+};

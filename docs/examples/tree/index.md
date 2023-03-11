@@ -1,4 +1,4 @@
-# 一个树形组件
+# 树形组件
 
 思路来源 [https://www.naiveui.com/zh-CN/os-theme/components/tree]
 

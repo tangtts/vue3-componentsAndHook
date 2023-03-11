@@ -2,6 +2,7 @@ export default {
   markdown: {
     lineNumbers: true,
   },
+  head: [["link", { rel: "icon", href: "/logo.png" }]],
   themeConfig: {
     siteTitle: false,
 
@@ -46,20 +47,8 @@ export default {
           text: "基础组件",
           items: [
             {
-              text: "Button按钮",
-              link: "/examples/button/",
-            },
-            {
               text: "虚拟列表",
               link: "/examples/virtual/",
-            },
-            {
-              text: "八卦loading",
-              link: "/examples/baGua/",
-            },
-            {
-              text: "旋转大图",
-              link: "/examples/preview-img/",
             },
             {
               text: "放大镜",
@@ -78,11 +67,11 @@ export default {
               link: "/examples/upload/",
             },
             {
-              text: "laoding",
+              text: "八卦loading",
               link: "/examples/loading/",
             },
             {
-              text: "上传并且剪裁图片",
+              text: "剪裁图片",
               link: "/examples/jianCai/",
             },
             {

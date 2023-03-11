@@ -6,7 +6,7 @@ import '@vue/runtime-core'
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AddKettleDynamically: typeof import('./src/components/addKettleDynamically/index.vue')['default']
-    BaGua: typeof import('./src/components/baGua/baGua.vue')['default']
+    BaGua: typeof import('./src/components/baGua/index.vue')['default']
     CardList: typeof import('./src/components/flip/cardList.vue')['default']
     Checkbox: typeof import('./src/components/checkbox/index.vue')['default']
     ClickOutside: typeof import('./src/components/clickOutside/index.vue')['default']

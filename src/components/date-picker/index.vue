@@ -28,7 +28,7 @@
 </template>
 <script lang="ts" setup>
 import { onMounted, ref, computed, reactive, watch } from "vue";
-
+import datePicker from "./date-picker.vue"
 
 const date = ref(new Date());
 const range = ref<Date[]>();
@@ -46,6 +46,6 @@ const form = reactive<{
 
 <style lang="scss" scoped>
 .result {
-  @apply font-bold text-orange-500 text-2xl
+  @apply font-bold text-green-500 text-xl
 }
 </style>

@@ -1,13 +1,16 @@
 #  loading 图
 一个简单的 loading 图。
-> 仿照了 `element-plus`中的 `loading` 图 
-> 有很多属性没有用上，比如`background-color`,`text`,`svg`等
-> 主要原理
- 1. 使用`createApp`生成实例(loadingInstance),第一个参数为`vnode`,第二个参数为`props`
- 2. 实例(loadingInstance)调用`mount`,传入`div`元素，生成 `vm`
- 3.  销毁时:` vm.$el?.parentNode?.removeChild(vm.$el); loadingInstance.unmount()`;
-# 基础用法
+> 仿照了 [`element-plus`中的 `loading`](https://github.com/element-plus/element-plus/blob/125f5f46500110a67f0217df8d82c8a679eb45a9/packages/components/loading/src/service.ts#L16)   
+## 主要原理
 
+ 1. 使用 <textHighlight type="danger"> createApp生成实例(loadingInstance)</textHighlight>,第一个参数为`vnode`(即为.vue文件),第二个参数为`props`( visable:boolean,close:Function )
+ 2. 实例(loadingInstance)执行<textHighlight type="success"> loadingInstance.mount(document.createElement("div"))</textHighlight>，生成 vm
+ 3. <textHighlight type="danger">el.appendChild(vm.$el)</textHighlight> 向父元素插入真实dom
+ 4.  销毁时:` vm.$el?.parentNode?.removeChild(vm.$el); loadingInstance.unmount()`;
+   >
+# 基础用法
+>
+> 
 <loading></loading>
 
 <script setup>
@@ -21,12 +24,7 @@
 ```vue
 
 <template>
-
   <div v-my-loading="isLoading" id="loading" style="width:100px;height:100px;background:red;position: relative;"></div>
-
-  <el-button @click="isLoading = !isLoading">切换</el-button>
-  <el-button @click="serverLoading">使用服务</el-button>
-
 </template>
 <script lang="ts" setup>
 import { ref } from 'vue';
@@ -49,59 +47,12 @@ const serverLoading = () => {
 ```
 </details>
 
-# 指令用法
- 
-
-
-<details>
-
-<summary>指令代码展开查看</summary>
-
-```vue
-  <template>
-  <div v-my-loading="isLoading" id="loading" style="width:100px;height:100px;background:red;position: relative;"></div>
-</template>
-
-<script lang="ts" setup>
-import  {vMyLoading} from "./loading"
-
-const  isLoading  = ref(true);
-</script>
-```
-
-</details>
-
-<details>
-
-<summary>服务代码展开查看</summary>
-
-```vue
-  <template>
-   <el-button @click="serverLoading">使用服务</el-button>
-</template>
-
-<script lang="ts" setup>
-import  {loading} from "./loading"
-
-const serverLoading = () => {
-  let instance = loading({
-    visible: isLoading2.value,
-    target: document.getElementById("loading")!,
-  })
-  setTimeout(() => {
-    instance.close()
-  }, 1000)
-}
-</script>
-```
-
-</details>
 
 				
 # 属性
-|  属性名   | 说明  |  类型 |  可选值 | 默认值
-|  :----:  | :----:  | :----:  | :----:  | :----:  | 
-| v-my-loading  | 是否显示动画 | boolean | --  | false | 
+|    属性名    |     说明     |  类型   | 可选值 | 默认值 |
+| :----------: | :----------: | :-----: | :----: | :----: |
+| v-my-loading | 是否显示动画 | boolean |   --   | false  |
 
 # Source
 

@@ -17,28 +17,6 @@
 ```vue
   <template>
   <el-form>
-    <el-form-item label="duration">
-      <el-select v-model="duration">
-        <el-option label="1s" value="1"/>
-        <el-option label="fast" value="fast"/>
-        <el-option label="slow" value="slow"/>
-        <el-option label="normal" value="normal"/>
-      </el-select>
-    </el-form-item>
-
-    <el-form-item label="size">
-      <el-slider v-model="size" :min='100' :max='400' />
-    </el-form-item>
-
-    <el-form-item label="trigger">
-      <el-radio-group v-model="trigger">
-        <el-radio label="click" />
-        <el-radio label="hover" />
-      </el-radio-group>
-
-    </el-form-item>
-  </el-form>
-
   <reverse-card :width="size" :height="size" :trigger="trigger" :duration="duration">
     <template #front>
       <div>
@@ -68,11 +46,11 @@ const trigger = ref<triggerType>('click')
 </details>
 				
 # 属性
-|  属性名   | 说明  |  类型 |  可选值 | 默认值
-|  :----:  | :----:  | :----:  | :----:  | :----:  | 
-| size  |  卡片大小 | number | -- | 100 |
-| duration  |  旋转速度 | fast/slow/normal/string | —— | 1s |
-| trigger  |  触发条件 | click/hover | —— | click |
+|  属性名  |   说明   |          类型           | 可选值 | 默认值 |
+| :------: | :------: | :---------------------: | :----: | :----: |
+|   size   | 卡片大小 |         number          |   --   |  100   |
+| duration | 旋转速度 | fast/slow/normal/string |   ——   |   1s   |
+| trigger  | 触发条件 |       click/hover       |   ——   | click  |
 
 # Source
 

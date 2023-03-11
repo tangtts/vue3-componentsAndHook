@@ -157,68 +157,49 @@ watch(() => props.fileList, (outerFiles) => {
 </script>
 <style lang="scss">
 .input {
-  display: none;
+  @apply hidden
 }
 
 .list {
-  display: flex;
-  gap: 10px;
+  @apply flex gap-7;
 
   .item {
-    width: 200px;
-    height: 200px;
-    border-radius: 5px;
-    border: 1px dashed red;
-    padding: 8px;
-    position: relative;
-    list-style: none;
+    @apply w-[300px] aspect-square relative py-4 list-none rounded-sm border-dashed border-blue-400;
 
     img {
-      object-fit: contain;
+      @apply object-contain
     }
 
     .name {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      margin: 0;
-      font-size: 12px;
+      @apply truncate m-0 text-center text-green-600;
     }
 
     .close {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      left: 0;
-      top: 0;
+      @apply absolute w-full h-full left-0 z-10 top-0 opacity-0 flex items-center justify-center;
       font-size: 50px;
       transition: opacity .5s;
-      opacity: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
 
       p {
-        display: none;
-        cursor: pointer;
+        @apply hidden cursor-pointer
       }
     }
 
     &:hover {
-      background-color: #cdc0c0;
+      @apply bg-white bg-opacity-80;
 
       img {
-        filter: blur(5px);
+        @apply opacity-40;
       }
 
       .name {
-        opacity: 0.8;
+        @apply opacity-80;
       }
 
       .close {
-        opacity: 1;
+        @apply opacity-100;
 
         p {
-          display: block;
+          @apply block
         }
       }
     }

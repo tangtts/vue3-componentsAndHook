@@ -2,7 +2,7 @@
   <div>
     <!--  variable 高度不定-->
     <VirtualList :items="items" :remain="remain" :size="size" :variable="true">
-      <template v-slot="{item}">
+      <template v-slot="{ item }">
         <UserItem :item="item" />
       </template>
     </VirtualList>
@@ -23,7 +23,7 @@ export interface Item {
 const items: Item[] = []
 
 for (let i = 0; i < 100; i++) {
-  items.push({ id: i, value: Math.random() * i })
+  items.push({ id: i, value: Math.floor(Math.random() * i) + i })
 }
 
 // 可见个数
@@ -32,10 +32,3 @@ const remain = ref(8)
 const size = ref(40)
 
 </script>
-<style>
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-</style>

@@ -1,7 +1,7 @@
 // .vitepress/theme/index.js
 
 import DefaultTheme from "vitepress/theme";
-
+import textHighlight from "../../../src/components/text-highlight/index";
 import "element-plus/dist/index.css";
 export default {
   ...DefaultTheme,
@@ -11,5 +11,6 @@ export default {
     import("element-plus").then(module => {
       app.use(module);
     });
+    app.component("textHighlight", textHighlight);
   },
 };

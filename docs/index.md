@@ -6,14 +6,14 @@ titleTemplate: 一个Vue3组件库/Hook
 hero:
   name: TSK
   text: 一个Vue3组件库/Hook
-  tagline: 没啥特点仅供学习
+  tagline: 仅供学习
   image:
     src: /logo.png
     alt: TSK
   actions:
     - theme: brand
       text: 开始
-      link: /examples/button/
+      link: /examples/virtual/
     - theme: alt
       text: 在 Github 上查看
       link: https://github.com/tangtts/vue3-componentsAndHook.git

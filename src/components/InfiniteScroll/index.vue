@@ -1,18 +1,16 @@
 <template>
-  <div>
-    <div style="overflow:auto;height: 200px;">
-      <ul class="list" :infinite-scroll-delay="300" :infinite-scroll-distance="20" :infinite-scroll-immediate="true"
-        :infinite-scroll-disabled="disabled" v-infinite-scroll="load">
-        <li v-for="i in count" class="list-item">{{ i }}</li>
-      </ul>
-      <p v-if="loading">加载中...</p>
-      <p v-if="noMore">没有更多了</p>
-    </div>
+  <div class="outer">
+    <ul class="list" :infinite-scroll-delay="300" :infinite-scroll-distance="20" :infinite-scroll-immediate="true"
+      :infinite-scroll-disabled="disabled" v-infinite-scroll="load">
+      <li v-for="i in count" class="list-item">{{ i }}</li>
+    </ul>
+    <p v-if="loading" class="tip">加载中...</p>
+    <p v-if="noMore" class="tip">没有更多了</p>
   </div>
 </template>
 <script setup lang="ts">
-import { computed, nextTick, ref, VNode, watch, } from 'vue';
-import type { ObjectDirective, FunctionDirective, ComponentPublicInstance } from "vue"
+import { computed, DirectiveBinding, nextTick, ref, VNode, watch, } from 'vue';
+import type { ObjectDirective, ComponentPublicInstance } from "vue"
 
 let count = ref(2),
   loading = ref(false)
@@ -31,13 +29,9 @@ const noMore = computed(() => {
  * 7. 监听 disabled 的变化，如果为 true，解绑
  */
 
-
-
 type infinite<S = string> = S extends `infinite-scroll-${infer P}` ? P : S;
 
 type TypeDefaultOption = Record<`infinite-scroll-${string}`, any>
-
-
 
 type defaultOptionKey<T> = {
   [K in keyof T as infinite<K>]: T[K]
@@ -97,19 +91,16 @@ function throttle(fn, delay = 200) {
 
 const SCOPE = 'infinite-scroll'
 
-
 type InfiniteScrollCallback = () => void
 
 type InfiniteScrollEl = HTMLElement & {
   [SCOPE]: {
-    container: HTMLElement | Window
-    containerEl: HTMLElement
+    container: HTMLElement
     instance: ComponentPublicInstance
     delay: number // export for test
-    lastScrollTop: number
     cb: InfiniteScrollCallback
     onScroll: () => void
-    observer?: MutationObserver
+    observer?: MutationObserver,
   }
 }
 
@@ -120,7 +111,6 @@ function handleScroll(el: InfiniteScrollEl, fn: InfiniteScrollCallback) {
   const { disabled, distance } = getScrollOptions(el, instance)
   // // 说明没有触动
   if (disabled) return;
-  // @ts-ignore
   if (container.scrollTop + container.clientHeight + Number(distance) >= container.scrollHeight) {
     fn()
   } else {
@@ -131,28 +121,23 @@ function handleScroll(el: InfiniteScrollEl, fn: InfiniteScrollCallback) {
   }
 }
 
-
-// TODO 如果换成 这个类型的话, 会有警告，elementUI 不知道有没有
-// https://github.com/element-plus/element-plus/blob/dev/packages/components/infinite-scroll/src/index.ts
-// ObjectDirective<
-//   InfiniteScrollEl,
-//   InfiniteScrollCallback
-// >
-let vInfiniteScroll: ObjectDirective = {
+const vInfiniteScroll: ObjectDirective<InfiniteScrollEl, InfiniteScrollCallback> = {
 
   async mounted(el, bindings) {
     const { instance, value: cb } = bindings
+    await nextTick()
     let { delay, immediate } = getScrollOptions(el, instance!);
-    let container = getOverScrollEle(el) as HTMLElement;
-
+    let container = getOverScrollEle(el);
+    if (!container) return;
     let onScroll = handleScroll.bind(null, el, cb)
 
     if (!instance) return
     el[SCOPE] = {
       container,
       onScroll,
-      el,
       instance,
+      delay,
+      cb
     }
     if (immediate) {
 
@@ -167,13 +152,13 @@ let vInfiniteScroll: ObjectDirective = {
       onScroll()
     }
     container?.addEventListener("scroll", throttle(onScroll.bind(null, el, instance), delay))
-    console.log("🚀 ~ file: index.vue ~ line 165 ~ mounted ~ container", container);
   },
   unmounted(el) {
     const { onScroll, container } = el[SCOPE]
     if (container) {
       container.removeEventListener("scroll", onScroll)
-      el[SCOPE] = {}
+      el[SCOPE].observer?.disconnect();
+      delete el[SCOPE].observer
     }
   }
 }
@@ -190,13 +175,22 @@ const load = () => {
   }, 1000)
 }
 </script>
-<style lang="scss">
-.list {
-  li {
-    height: 50px;
-    margin: 10px;
-    background-color: lightblue;
+<style lang="scss" scoped>
+.outer {
+  @apply overflow-auto h-[500px] bg-blue-200 w-full rounded-md;
 
+
+
+  .list {
+    @apply list-none p-0 m-0;
+
+    li {
+      @apply h-[80px] mb-2 bg-green-400 text-white font-bold flex cursor-pointer rounded-md justify-center items-center;
+    }
+  }
+
+  .tip {
+    @apply text-gray-700 text-center m-2 font-bold
   }
 }
 </style>
