@@ -5,8 +5,8 @@
 ## 虚拟滚动的主要原理
 
 1. 找到父级元素 container 有 overflow 为 auto 或者 scroll
-2. 如果有 immediate，使用`new MutationObserver` 监听<textHighlight>绑定的元素（el）</textHighlight>
-3. `MutationObserver`监听是否触底，如果没有触底行为则执行<textHighlight type="success">v-infinite-scroll 绑定的函数(load)</textHighlight>执行`load`函数则会填充列表，只要监听到触底行为，就`MutationObserver` 立即停止监听，<textHighlight>初始化填充完毕</textHighlight>
+2. 如果有 immediate，使用`new MutationObserver` 监听<red>绑定的元素（el）</red>
+3. `MutationObserver`监听是否触底，如果没有触底行为则执行<red type="success">v-infinite-scroll 绑定的函数(load)</red>执行`load`函数则会填充列表，只要监听到触底行为，就<red>MutationObserver</red> 立即停止监听，<red>初始化填充完毕</red>
 4. 后续的话通过触发`container` 的滚动事件,不断执行`load` 方法即可
 
 ---

@@ -3,12 +3,13 @@
     table
   </div>
 
-  <el-button @click="isLoading = !isLoading">{{
+  <base-button @click="isLoading = !isLoading">{{
     isLoading ? '关闭loading' : "开启loading"
-  }}</el-button>
-  <el-button @click="serverLoading">使用服务</el-button>
+  }}</base-button>
+  <base-button type="success" style="margin-left:20px;" @click="serverLoading">使用服务</base-button>
 </template>
 <script lang="ts" setup>
+import baseButton from "../base/button/index.vue"
 import { ref } from 'vue';
 import { vMyLoading, loading } from "./loading"
 

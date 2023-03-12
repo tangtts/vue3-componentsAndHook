@@ -10,20 +10,21 @@
     </span>
     <div :key="node.key" :class="{
       isSelected: isSelected,
+      node: true
     }">
-      <myCheckbox v-if="checkable" :indeterminate="indeterminate" :modelValue="checked"
+      <base-checkbox v-if="checkable" :indeterminate="indeterminate" :modelValue="checked"
         @update:modelValue="handleCheckChange">
         <TreeNodeContent :node="node" />
-      </myCheckbox>
+      </base-checkbox>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-import myCheckbox from "../checkbox/index.vue"
+import baseCheckbox from "../base/checkbox/index.vue"
 import { onMounted, ref, computed, reactive, watch, PropType } from "vue";
 import { TreeProps, TreeOption, TreeNode, Key } from "./types";
-import TriangleIcon from "./icon";
-import LoadingIcon from "./loading";
+import TriangleIcon from "./icon.vue";
+import LoadingIcon from "./loading.vue";
 import TreeNodeContent from "./tree-node-content";
 const props = defineProps({
   node: {
@@ -80,28 +81,33 @@ const isLoading = computed(() => {
 <style lang="scss" scoped>
 $state-prefix: "is";
 
-@mixin when($state) {
-  @at-root {
-    .#{$state-prefix + $state} {
-      @content;
-    }
+// @mixin when($state) {
+//   @at-root {
+//     .#{$state-prefix + $state} {
+//       @content;
+//     }
+//   }
+// }
+
+// @include when(Selected) {
+//   background-color: #b9b8d6;
+// }
+
+
+
+.container {
+  @apply flex items-center text-lg cursor-pointer my-4;
+
+  .isSelected {
+    @apply bg-blue-200 rounded-md
+  }
+
+  .node {
+    @apply px-6 py-1 font-bold
   }
 }
 
-@include when(Selected) {
-  background-color: #b9b8d6;
-}
 
-.container {
-  font-size: 20px;
-  line-height: 40px;
-  display: flex;
-  align-items: center;
-}
-
-.pointer {
-  cursor: pointer;
-}
 
 .expanded {
   color: red;

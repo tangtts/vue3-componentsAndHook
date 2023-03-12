@@ -1,9 +1,9 @@
 # 树形组件
 
-思路来源 [https://www.naiveui.com/zh-CN/os-theme/components/tree]
+思路/数据来源 [https://www.naiveui.com/zh-CN/os-theme/components/tree]
 
-1.  由于可以自定义`lable`,`key` 值，所以第一步需要函数`createTree`格式化代码
-2.  格式化后的代码增加属性`level`,表明层级，通过计算属性`flattenTree`获得一个拍平后的数据
+1.  由于可以自定义<green>lable / key</green>值，所以第一步需要函数<red>createTree</red>格式化代码
+2.  格式化后的代码增加属性<red>level,表明层级</red>，通过计算属性`flattenTree`获得一个拍平后的数据
 3.  遍历`flattenTree`,把遍历后的数据`node` 传递给下一层级，作用域插槽
 4.  虚拟滚动 / 懒加载等 其余次要逻辑 都是基于此
 

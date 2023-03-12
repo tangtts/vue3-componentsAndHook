@@ -1,15 +1,21 @@
 # 日历组件
 
-1.  可以传入`type`,可选值为`date| range`,`date`智能选择一个日期，`range` 可以选择多个
-2.  可以传入`format`,表示回显数据类型， 可选值为`yyyy-mm-dd| timestamp`
-3.  找到这个月的1号是周几，然后回退这么多天作为初始值，遍历 42，形成一个`Array<Date>`
-4.  遍历到页面上是一个一个的`Date` 的结构，包含很多信息，可以方便做后续处理
+1.  可以传入<green>type</green>,可选值为 <green> date | range </green>,`date`只能选择一个日期，`range` 可以选择多个
+2.  可以传入<green> format </green>,表示回显数据类型， 可选值为<green> yyyy-mm-dd | timestamp </green>
+3.  找到这个月的1号是周几，然后回退这么多天作为初始值，遍历 <red>42</red>，形成一个<red>Date[]</red>
+4.  由于遍历到页面上是一个一个的<red>Date</red> 的结构，包含很多信息，可以方便做后续处理
 5.  是否是当前月，是否在选择日期的里面，是否是选中 都是基于`Date`的这种结构
 
 ---
-   巧妙之处在于,一方面是形成 `7 * 6` 的结构，另一方面是一个`Date` 类型，包含信息较多，方便后续 
-  
-  <details>
+::: tip
+巧妙之处在于,一方面是形成 <red>7 * 6</red> 的结构，另一方面是一个<red>Date</red> 类型，包含信息较多，方便后续的处理
+:::
+
+---
+>
+>
+
+ <details>
 
    ```vue
   <template>
@@ -20,10 +26,13 @@
     </div>
   </template>
   ```
-  </details>
+
+  </details> 
+
+---
 
 # 基础用法
-
+> 
 <datePickerPage></datePickerPage>
 
 <script setup>
@@ -49,30 +58,7 @@
 
 ```vue
 <template>
-    <el-form size="large">
-      <el-form-item label="type">
-        <el-radio-group v-model="form.type">
-          <el-radio label="date"></el-radio>
-          <el-radio label="range"></el-radio>
-        </el-radio-group>
-      </el-form-item>
-
-      <el-form-item label="value-format">
-        <el-radio-group v-model="form.format">
-          <el-radio label="timestamp"></el-radio>
-          <el-radio label="YYYY-MM-DD"></el-radio>
-        </el-radio-group>
-      </el-form-item>
-
-      <el-form-item label="result">
-        <span class="result"> {{ form.type == "date" ? date : range }}</span>
-      </el-form-item>
-
-      <el-form-item label="date-picker">
-        <date-picker :value-format="form.format" :type="form.type" v-model="date" @select-range="getRange"></date-picker>
-      </el-form-item>
-
-    </el-form>
+      <date-picker :value-format="form.format" :type="form.type" v-model="date" @select-range="getRange"></date-picker>
 </template>
 <script lang="ts" setup>
 import DatePicker from "./date-picker.vue"
@@ -94,13 +80,6 @@ const form = reactive<{
   type: "date"
 })
 </script>
-
-<style lang="scss" scoped>
-.result {
-  @apply font-bold text-orange-500 text-2xl
-}
-</style>
-
 ```
 </details>
 

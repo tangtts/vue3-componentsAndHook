@@ -4,6 +4,8 @@
     "module": "esnext",
     "moduleResolution": "node",
     "strict": true,
+    "composite": true,
+    "types": ["node"],
     "jsx": "preserve",
     "jsxFactory": "h",
     "noImplicitAny": false,
@@ -15,12 +17,9 @@
     "baseUrl": "./",
     "paths": {
       "utils/*": ["./src/utils/*"],
+      "components/*": ["./src/components/*"],
       "@/*": ["src/*"]
-    },
-    "types": [
-      "element-plus/global",
-      "unplugin-vue-define-options/macros-global",
-    ]
+    }
   },
   "exclude": ["node_modules"],
   "include": [

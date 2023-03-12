@@ -1,3 +1,55 @@
+# flip组件
+
+[思路来源-掘金](https://juejin.cn/post/6844903772968206350)  
+[mdn-animate](https://developer.mozilla.org/zh-CN/docs/Web/API/Element/animate)
+
+  ---
+
+  <red>FLIP</red> 是<red> First、Last、Invert和 Play</red>四个单词首字母的缩写,
+
+  ---
+
+<red>First</red>，指的是在任何事情发生之前（过渡之前），记录当前元素的位置和尺寸，即动画开始之前那一刻元素的位置和尺寸信息，可以使用 getBoundingClientRect()这个 API来处理（大部分情况下其实 offsetLeft和 offsetTop也是可以的）  
+
+<br/>
+<br/>
+<red>Last</red>：执行一段代码，让元素发生相应的变化，并记录元素在动画最后状态的位置和尺寸，即动画结束之后那一刻元素的位置和尺寸信息  
+<br/>
+<br/>
+<red>Invert</red>：计算元素第一个位置（First）和最后一个位置（Last）之间的位置变化（如果需要，还可以计算两个状态之间的尺寸大小的变化），然后使用这些数字做一定的计算，让元素进行移动（通过 transform来改变元素的位置和尺寸），从而创建它位于第一个位置（初始位置）的一个错觉
+
+即，一上来直接让元素处于动画的结束状态，然后使用 transform属性将元素反转回动画的开始状态（这个状态的信息在 First步骤就拿到了
+
+
+<red>Play</red>：将元素反转（假装在first位置），我们可以把 transform设置为 none，因为失去了 transform的约束，所以元素肯定会往本该在的位置（即动画结束时的那个状态）进行移动，也就是last的位置，如果给元素加上 transition的属性，那么这个过程自然也就是以一种动画的形式发生了
+
+
+---
+
+:::tip
+在<blue> vue </blue>中，获取最新的<green> dom </green>使用的是<red> 调用nextTick之后 </red>
+:::
+
+---
+
+
+
+---
+
+# 基础用法
+> 
+<flip></flip>
+
+<script setup>
+  import flip from "../../../src/components/flip/index.vue" 
+</script>
+
+
+<details>
+
+<summary>以card列表举例</summary>
+
+```vue{84-112,115-122}
 <template>
   <div class="container">
     <div class="action">
@@ -53,25 +105,28 @@ let m: IMock = createMock()
 const cards = ref<IMock[]>([m]);
 const cardRefs = ref<INode[]>([])
 
-
+// 新增
 const add = () => {
   scheduleAnimation(() => {
     cards.value.unshift(createMock())
   })
 }
+
+// 删除单个
 const del = (c: IMock) => {
   scheduleAnimation(() => {
     cards.value = cards.value.filter(card => card != c)
   })
 }
 
+// 多选删除
 const delChoose = () => {
   scheduleAnimation(() => {
     cards.value = cards.value.filter(card => !card.status)
   })
 }
 
-
+// 乱序
 const shuffle = () => {
   scheduleAnimation(() => {
     cards.value = shuffleArr(cards.value);
@@ -80,15 +135,16 @@ const shuffle = () => {
 
 async function scheduleAnimation(update: Function) {
   const prev = Array.from(cardRefs.value);
+  // 形成以前的 dom 结构Map
   const prevRectMap = recordPosition(prev);
   update()
   await nextTick();
-  // 获取原来数据的
+  // 由于是dom 复用, 更新之后获取最新的dom结构，此时页面尚未渲染
   const currentRectMap = recordPosition(prev);
   Object.keys(prevRectMap).forEach((node) => {
     const currentRect = currentRectMap[node];
     const prevRect = prevRectMap[node];
-
+// 比较 老节点的位置 - 新节点，意味着要退回到初始位置
     const invert = {
       left: prevRect.left - currentRect.left,
       top: prevRect.top - currentRect.top,
@@ -108,7 +164,7 @@ async function scheduleAnimation(update: Function) {
   })
 }
 
-
+// 传入节点，返回节点位置
 function recordPosition(nodes: INode[]) {
   return nodes.reduce((prev, node) => {
     const rect = node.getBoundingClientRect();
@@ -123,55 +179,6 @@ const setCardRef = (el) => {
   el && cardRefs.value.push(el)
 }
 
-
 </script>
-
-<style lang="scss" scoped>
-.action {
-  @apply mt-4
-}
-
-.row {
-  @apply grid grid-cols-2 gap-4 mt-4
-}
-
-.card {
-  @apply min-h-[180px] bg-blue-50 rounded-md flex shadow-md p-2 drop-shadow flex-col text-blue-400 font-bold transition cursor-pointer;
-
-  &:hover {
-    @apply shadow-xl
-  }
-
-  .head {
-    @apply border-b-2 pb-4 border-gray-200 flex justify-between
-  }
-
-  li {
-    @apply mt-2 text-orange-400
-  }
-
-  .content {
-    @apply flex mt-auto justify-between items-center
-  }
-}
-
-.btn {
-  @apply py-1 px-2 rounded-md text-white mx-2;
-
-  &-delete {
-    @apply bg-red-400;
-  }
-
-  &-add {
-    @apply bg-orange-400;
-  }
-
-  &-reset {
-    @apply bg-yellow-400
-  }
-
-  &-shuffle {
-    @apply bg-blue-400
-  }
-}
-</style>
+```
+</details>

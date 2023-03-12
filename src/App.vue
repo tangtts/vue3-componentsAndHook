@@ -1,28 +1,29 @@
 <template>
   <div class="dark">
-    <el-config-provider :locale="locale">
-      <!-- <datePickerPage></datePickerPage> -->
-      <!-- <flip /> -->
-      <filp />
-      <!-- <sidePicPreview /> -->
-      <!-- <myUpload /> -->
-      <!-- <myTree /> -->
-      <!-- <virtualList /> -->
-      <!-- <BaGua animationSpeed='1s' size="100"/> -->
+    <!-- <datePickerPage></datePickerPage> -->
+    <!-- <flip /> -->
+    <!-- <filp /> -->
+    <!-- <sidePicPreview />
+       -->
+    <!-- <myUpload /> -->
+    {{ aa }}
+    <myTree />
+    <baseSwitch size="default" v-model="aa">aaaa</baseSwitch>
+    <!-- <virtualList /> -->
+    <!-- <BaGua animationSpeed='1s' size="100"/> -->
 
-      <!-- <preview-img img="../docs/public/logo.png" v-model="show" /> -->
-      <!-- <el-button @click="show =!show" type="primary"> 打开 </el-button> -->
-      <!-- <magnifiers/> -->
-      <!-- <infinite-scroll/> -->
+    <!-- <preview-img img="../docs/public/logo.png" v-model="show" /> -->
+    <!-- <el-button @click="show =!show" type="primary"> 打开 </el-button> -->
+    <!-- <magnifiers/> -->
+    <!-- <infinite-scroll/> -->
 
-      <!-- <reverseCard /> -->
-      <!-- <my-upload/> -->
-      <!-- <clickOutside /> -->
-      <!-- <Loading/> -->
+    <!-- <reverseCard /> -->
+    <!-- <my-upload/> -->
+    <!-- <clickOutside /> -->
+    <!-- <Loading/> -->
 
-      <!-- <Loading /> -->
-      <!-- <JinCai/> -->
-    </el-config-provider>
+    <!-- <Loading /> -->
+    <!-- <JinCai/> -->
   </div>
 </template>
 <script lang="ts" setup>
@@ -31,9 +32,7 @@ import Loading from "./components/loading/index.vue"
 import clickOutside from "./components/clickOutside/index.vue"
 import { createApp, defineComponent, onMounted, h, ref, createVNode, render } from "vue";
 import { ObjectDirective, FunctionDirective } from "vue"
-import zhCn from "element-plus/lib/locale/lang/zh-cn";
-const locale = ref(zhCn);
-
+const aa = ref(false)
 </script>
 
 <style lang="scss">

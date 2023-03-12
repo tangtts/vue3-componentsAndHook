@@ -17,9 +17,6 @@
         <button class="btn btn-delete" @click="deleteItem(src)" style="width: 50px">删除</button>
       </div>
     </div>
-
-
-
   </div>
 </template>
 <script lang="ts" setup>

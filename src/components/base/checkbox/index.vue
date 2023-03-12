@@ -5,7 +5,7 @@
       <template v-if="!$slots.default">{{ label }}</template>
     </label>
     {{ label }}
-    <input type="checkbox" v-model="model" @change="change" ref="inputRef">
+    <input type="checkbox" v-model="model" class="checkbox" @change="change" ref="inputRef">
   </div>
 </template>
 <script lang="ts" setup>
@@ -41,5 +41,6 @@ onMounted(() => {
   indeterminate(props.indeterminate)
 })
 </script>
+
 
 <style lang="scss" scoped></style>

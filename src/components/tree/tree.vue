@@ -30,7 +30,7 @@ import {
   injectKey,
 } from "./types";
 import TreeNodeItem from "./treeNode.vue";
-import VirtualList from "./virtualList";
+import VirtualList from "./virtualList.vue";
 const props = defineProps(TreeProps);
 const tree = ref<TreeNode[]>([]);
 

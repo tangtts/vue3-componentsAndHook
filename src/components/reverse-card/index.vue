@@ -1,5 +1,5 @@
 <template>
-  <el-form style="margin-top:20px">
+  <!-- <el-form style="margin-top:20px">
     <el-form-item label="duration">
       <el-select v-model="duration">
         <el-option label="1s" value="1"/>
@@ -20,7 +20,7 @@
       </el-radio-group>
 
     </el-form-item>
-  </el-form>
+  </el-form> -->
 
   <reverse-card :width="size" :height="size" :trigger="trigger" :duration="duration">
     <template #front>

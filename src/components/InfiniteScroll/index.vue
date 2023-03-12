@@ -179,12 +179,10 @@ const load = () => {
 .outer {
   @apply overflow-auto h-[500px] bg-blue-200 w-full rounded-md;
 
-
-
   .list {
     @apply list-none p-0 m-0;
 
-    li {
+    .list-item {
       @apply h-[80px] mb-2 bg-green-400 text-white font-bold flex cursor-pointer rounded-md justify-center items-center;
     }
   }

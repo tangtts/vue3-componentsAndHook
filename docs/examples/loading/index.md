@@ -3,9 +3,9 @@
 > 仿照了 [`element-plus`中的 `loading`](https://github.com/element-plus/element-plus/blob/125f5f46500110a67f0217df8d82c8a679eb45a9/packages/components/loading/src/service.ts#L16)   
 ## 主要原理
 
- 1. 使用 <textHighlight type="danger"> createApp生成实例(loadingInstance)</textHighlight>,第一个参数为`vnode`(即为.vue文件),第二个参数为`props`( visable:boolean,close:Function )
- 2. 实例(loadingInstance)执行<textHighlight type="success"> loadingInstance.mount(document.createElement("div"))</textHighlight>，生成 vm
- 3. <textHighlight type="danger">el.appendChild(vm.$el)</textHighlight> 向父元素插入真实dom
+ 1. 使用 <red > createApp生成实例(loadingInstance)</red>,第一个参数为`vnode`(即为.vue文件),第二个参数为`props`( visable:boolean,close:Function )
+ 2. 实例(loadingInstance)执行<red type="success"> loadingInstance.mount(document.createElement("div"))</red>，生成 vm
+ 3. <red >el.appendChild(vm.$el)</red> 向父元素插入真实dom
  4.  销毁时:` vm.$el?.parentNode?.removeChild(vm.$el); loadingInstance.unmount()`;
    >
 # 基础用法

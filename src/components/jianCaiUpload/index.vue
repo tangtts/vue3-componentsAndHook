@@ -13,21 +13,23 @@
         <canvas width="300" height="300" style="border:2px dashed blue" ref="canvasRef"></canvas>
         <div class="center"></div>
       </div>
-      <el-button-group>
-        <el-button @click="ZoomOrShrink('zoom')">放大</el-button>
-        <el-button @click="ZoomOrShrink('shrink')">缩小</el-button>
-        <el-button @click="confirm">确定</el-button>
-      </el-button-group>
+
+      <div>
+        <baseButton style="margin-right:10px;" type="success" @click="ZoomOrShrink('zoom')">放大</baseButton>
+        <baseButton style="margin-right:10px;" type="warning" @click="ZoomOrShrink('shrink')">缩小</baseButton>
+        <baseButton @click="confirm">确定</baseButton>
+      </div>
     </div>
 
     <div v-if="avatarSrc" style="margin-top:30px;">
       <img :src="avatarSrc" ref="avatarRef" class="avatar" alt="">
-      <el-button @click="upload" type="warning">上传</el-button>
+      <baseButton @click="upload">上传</baseButton>
     </div>
   </div>
 </template>
 <script setup lang="ts">
 import { ref, reactive, watch, computed } from "vue"
+import baseButton from "../base/button/index.vue"
 const chooseSrc = ref("")
 
 const position = reactive({

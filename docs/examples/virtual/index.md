@@ -4,12 +4,12 @@
 ##  虚拟滚动的主要原理 
 ### 固定高度
 1. 用户传递`全部数据Data`,和`remain 可见个数`,和 `size 大约每个item的高度`
-2. 外侧容器的高度是<textHighlight type="danger">remain * size</textHighlight>,内部容器的高度是<textHighlight type="danger">全部数据Data.length * size</textHighlight>,所以可以发生滚动
+2. 外侧容器的高度是<red>remain * size</red>,内部容器的高度是<red>全部数据Data.length * size</red>,所以可以发生滚动
 3. 定义`start`,`end` 进行初始化切割，默认`start = 0,end = remain`
-4. 页面渲染只要要对<textHighlight type="danger">全部数据Data.slice(start,end)</textHighlight>进行切割即可
-5. 当发生滚动的时候，可以计算出<textHighlight type="danger"> start = 滚动的高度 / size`,`end= start + remain</textHighlight>,再次进行切割
+4. 页面渲染只要要对<red>全部数据Data.slice(start,end)</red>进行切割即可
+5. 当发生滚动的时候，可以计算出<red> start = 滚动的高度 / size`,`end= start + remain</red>,再次进行切割
 ### 非固定高度
-   原理是相似的，都是不断的<textHighlight type="danger">切割数据</textHighlight>，唯一不同的是，需要计算每个item的高度，滚动的时候动态的改变
+   原理是相似的，都是不断的<red >切割数据</red>，唯一不同的是，需要计算每个item的高度，滚动的时候动态的改变
    start 的值
    
 

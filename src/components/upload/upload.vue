@@ -21,7 +21,7 @@
 import dragVue from './drag.vue';
 import { PropType, ref, shallowRef, watch } from 'vue';
 
-interface UploadRawFile extends File {
+interface IUploadRawFile extends File {
   uid: number
 }
 
@@ -30,7 +30,7 @@ interface UploadFile {
   size?: number
   uid: number
   url?: string
-  raw?: UploadRawFile
+  raw?: IUploadRawFile
 }
 
 const props = defineProps({
@@ -89,7 +89,7 @@ const uploadFiles = (files: File[]) => {
   }
 
   for (const file of files) {
-    const rawFile = file as UploadRawFile;
+    const rawFile = file as IUploadRawFile;
     /**
      * @description 开始组装
      */
@@ -125,7 +125,7 @@ const upload = (rawFile) => {
   }
 }
 
-const doUpload = (file) => {
+const doUpload = (file: File[]) => {
   // 如果是 成功态的话不用 上传
   console.log("执行上传")
   props.onSuccess(file, filesRef.value)

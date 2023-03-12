@@ -2,7 +2,7 @@
 
   <div>
     <!-- 改变mask 的大小，颜色，传入的图片 -->
-    <el-form>
+    <!-- <el-form>
 
       <el-form-item label="size">
         <el-slider v-model="size" :min='100' :max='400' />
@@ -29,7 +29,7 @@
         </el-select>
       </el-form-item>
 
-    </el-form>
+    </el-form> -->
     <magnifiers 
     img="https://img.alicdn.com/imgextra/i3/1917047079/O1CN01lkG2pf22AEUi1owve_!!1917047079.png_430x430q90.jpg"
      :size="size+'px'" 

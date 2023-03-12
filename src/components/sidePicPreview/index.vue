@@ -10,6 +10,7 @@
   </div>
 </template>
 <script lang="ts" setup>
+import { assetsElement } from "utils/index";
 import { onMounted, ref, computed, reactive, watch, CSSProperties, Transition, Ref, nextTick } from "vue";
 const pics = [
   "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxMjA3fDB8MXxzZWFyY2h8Mnx8dGVjaHxlbnwwfHx8fDE2NjIwMjc1MzI&ixlib=rb-1.2.1&q=80&w=500",
@@ -25,11 +26,7 @@ const sideActiveImg = ref<HTMLElement | null>(null)
 // 遮罩层
 const mask = ref<HTMLElement | null>(null)
 // assets 保证不是 null，要不ts一直有提示
-function assetsElement(ele: HTMLElement | null): asserts ele {
-  if (!ele) {
-    throw new Error(`${ele} is not exited`)
-  }
-}
+
 // 记录初始值
 const originalPosition = {
   left: 0,

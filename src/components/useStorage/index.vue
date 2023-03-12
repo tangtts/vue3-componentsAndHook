@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form :inline="true" ref="ruleFormRef" :model="formInline" :rules="rules" class="demo-form-inline">
+    <!-- <el-form :inline="true" ref="ruleFormRef" :model="formInline" :rules="rules" class="demo-form-inline">
       <el-form-item label="Storage Key" required prop="key">
         <el-input v-model="formInline.key" placeholder="Storage Key" />
       </el-form-item>
@@ -20,7 +20,7 @@
       <el-form-item>
         <el-button type="primary" @click="onSubmit(ruleFormRef)">Setting Storage</el-button>
         <el-button type="warning" @click="handleClearSelectStorage">clear Select Storage</el-button>
-        <el-button type="danger" @click="handleClearStorage">clear All Storage</el-button>
+        <el-button  @click="handleClearStorage">clear All Storage</el-button>
       </el-form-item>
     </el-form>
 
@@ -35,26 +35,26 @@
       <el-table-column fixed="right" label="Operations">
 
         <template #default="scope">
-          <el-button type="danger" size="small" @click="remove(scope.row)">remove</el-button>
+          <el-button  size="small" @click="remove(scope.row)">remove</el-button>
         </template>
       </el-table-column>
-    </el-table>
+    </el-table> -->
   </div>
 </template>
 <script lang="ts" setup>
 import { useStorage } from "./useStorage"
 import type { StoreStorage } from "./useStorage"
 import { ref, reactive, watch, computed } from "vue"
-import type { FormInstance, FormRules } from 'element-plus'
+// import { FormInstance, FormRules } from 'element-plus';
 import { ElMessage } from 'element-plus'
-const ruleFormRef = ref<FormInstance>()
-const { getAllStorage, removeStorage,clearStorage,setStorage } = useStorage()
+const ruleFormRef = ref<any>()
+const { getAllStorage, removeStorage, clearStorage, setStorage } = useStorage()
 const formInline = reactive({
   key: '',
   value: '',
   expire: ''
 })
-const rules = reactive<FormRules>({
+const rules = reactive<any>({
   key: [
     {
       required: true,
@@ -70,16 +70,16 @@ const rules = reactive<FormRules>({
     },
   ],
 })
-let r:StoreStorage[]= []
+let r: StoreStorage[] = []
 const handleSelectionChange = (e: any) => {
   r = e
 }
-const handleClearSelectStorage=()=>{
-  r.forEach(i=>{
+const handleClearSelectStorage = () => {
+  r.forEach(i => {
     removeStorage(i.key)
   })
 }
-const handleClearStorage = ()=>{
+const handleClearStorage = () => {
   clearStorage()
 }
 const remove = (row: any) => {
@@ -100,10 +100,10 @@ function format(arr: StoreStorage[]) {
 }
 
 
-const tableData = computed(() =>format( getAllStorage.value))
+const tableData = computed(() => format(getAllStorage.value))
 
 
-const onSubmit = async (formEl: FormInstance | undefined) => {
+const onSubmit = async (formEl: any | undefined) => {
   if (!formEl) return
   await formEl.validate((valid, fields) => {
     if (valid) {
@@ -111,8 +111,8 @@ const onSubmit = async (formEl: FormInstance | undefined) => {
         message: 'A success message.',
         type: 'success',
       })
-     setStorage(formInline.key, formInline.value, Number(formInline.expire))
-     formEl.resetFields()
+      setStorage(formInline.key, formInline.value, Number(formInline.expire))
+      formEl.resetFields()
     } else {
       console.log('error submit!', fields)
     }
@@ -120,7 +120,7 @@ const onSubmit = async (formEl: FormInstance | undefined) => {
 }
 </script>
 <style>
-  table{
-    margin:0 !important
-  }
+table {
+  margin: 0 !important
+}
 </style>

@@ -82,6 +82,10 @@ export default {
               text: "Date-Picker",
               link: "/examples/DatePicker/",
             },
+            {
+              text: "flip",
+              link: "/examples/flip/",
+            },
           ],
         },
       ],

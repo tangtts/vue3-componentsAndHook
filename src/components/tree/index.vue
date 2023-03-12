@@ -1,5 +1,7 @@
 <template>
-  <div class="m-20 border">
+  <div class="container">
+    <p class="msg">选中的item: <span class="data">{{ model }}</span></p>
+    <p class="msg">选中的checkbox:<span class="data"> {{ defaultCheckedKeys }}</span></p>
     <Tree :data="data" v-model:selectKeys="model" selectable multiple checkable :default-checked-keys="defaultCheckedKeys"
       :on-load="handleLoad" @update:checked-keys="updateCheckedKeys">
       <!--虚拟加载 :on-load="handleLoad" -->
@@ -13,10 +15,6 @@
 import Tree from "./tree.vue";
 import { onMounted, ref, computed, reactive, watch } from "vue";
 import { Key, TreeOption, TreeNode } from "./types";
-// defineOptions({
-//   name: "TreePage",
-// });
-
 const defaultCheckedKeys = ref<Key[]>(["40"]);
 const updateCheckedKeys = (node, val) => {
   defaultCheckedKeys.value = val;
@@ -76,4 +74,16 @@ function nextLabel(currentLabel?: Key): string {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.container {
+  @apply m-2 border border-solid border-blue-500 rounded-md p-4 bg-blue-50;
+
+  .msg {
+    @apply font-bold text-blue-500 mr-2;
+
+    .data {
+      @apply text-green-400
+    }
+  }
+}
+</style>
