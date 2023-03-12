@@ -37,8 +37,11 @@
 ---
 
 # 基础用法
-> 
-<flip></flip>
+>
+
+<ClientOnly>
+  <flip></flip>
+</ClientOnly>
 
 <script setup>
   import flip from "../../../src/components/flip/index.vue" 
