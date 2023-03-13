@@ -21,11 +21,11 @@
 import dragVue from './drag.vue';
 import { PropType, ref, shallowRef, watch } from 'vue';
 
-interface IUploadRawFile extends File {
+export interface IUploadRawFile extends File {
   uid: number
 }
 
-interface UploadFile {
+export interface UploadFile {
   name: string
   size?: number
   uid: number
@@ -36,11 +36,11 @@ interface UploadFile {
 const props = defineProps({
   onSuccess: {
     type: Function as PropType<(file: File[], fileList: UploadFile[]) => any>,
-    default: (arg: any, args: any) => ({})
+    default: (__arg: any, __args: any) => ({})
   },
   onExceed: {
     type: Function as PropType<(file: File[], fileList: UploadFile[]) => any>,
-    default: (arg: any, args: any) => ({})
+    default: (__arg: any, __args: any) => ({})
   },
   onBeforeLoad: {
     type: Function
@@ -100,7 +100,7 @@ const uploadFiles = (files: File[]) => {
   }
 }
 
-const handleStart = (file) => {
+const handleStart = (file: IUploadRawFile) => {
   let uploadFile: UploadFile = {
     size: file.size,
     url: URL.createObjectURL(file),
@@ -155,7 +155,8 @@ watch(() => props.fileList, (outerFiles) => {
   filesRef.value.push(...outerFiles)
 }, { immediate: true, deep: true })
 </script>
-<style lang="scss">
+
+<style lang="scss" scoped>
 .input {
   @apply hidden
 }

@@ -5,10 +5,14 @@
     <!-- <filp /> -->
     <!-- <sidePicPreview />
        -->
+
+    <base-list v-model="itemsRef">
+      <template #default="{ item }">
+        {{ item }}
+      </template>
+    </base-list>
     <!-- <myUpload /> -->
-    {{ aa }}
-    <myTree />
-    <baseSwitch size="default" v-model="aa">aaaa</baseSwitch>
+    <!-- <myTree /> -->
     <!-- <virtualList /> -->
     <!-- <BaGua animationSpeed='1s' size="100"/> -->
 
@@ -30,9 +34,28 @@
 // import BaGua from './components/baGua/BaGua.vue'
 import Loading from "./components/loading/index.vue"
 import clickOutside from "./components/clickOutside/index.vue"
-import { createApp, defineComponent, onMounted, h, ref, createVNode, render } from "vue";
-import { ObjectDirective, FunctionDirective } from "vue"
-const aa = ref(false)
+import { createApp, defineComponent, onMounted, h, ref, createVNode, render, reactive } from "vue";
+import { emojis } from "components/flip/mock";
+import Mock from "mockjs";
+const aa = ref(0);
+const options = ref([
+  { label: "xx", value: 0 },
+  { label: "xx2", value: 1 },
+  { label: "xx3", value: 1 },
+])
+let id = 0;
+function createMock() {
+  id = (++id) % emojis.length;
+  return {
+    ...Mock.mock({
+      name: "@name",
+      id: "@increment(0)"
+    }),
+    emoji: emojis[id]
+  }
+}
+// 初始化数据
+const itemsRef = ref([createMock()])
 </script>
 
 <style lang="scss">

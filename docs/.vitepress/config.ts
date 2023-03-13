@@ -8,7 +8,7 @@ export default {
 
     logo: "/logo.png",
     nav: [
-      { text: "组件", link: "/examples/button/" },
+      { text: "组件", link: "/examples/virtual/" },
       { text: "hook", link: "/hook/useStorage/" },
       { text: "directive", link: "/directive/clickOutside/" },
       { text: "有趣样式", link: "/css/addKettleDynamically/" },

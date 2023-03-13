@@ -1,7 +1,14 @@
+import { selectPropsTypes } from "./base/select/types";
+import { inputPropsTypes } from "./base/input/type";
 import { App, Component } from "vue";
 import { checkboxPropsTypes } from "./base/checkbox/types";
 import uploadPage from "components/upload/index.vue";
 import baseSwitch from "components/base/switch/index.vue";
+import baseInput from "components/base/input/index.vue";
+import baseSelect from "components/base/select/index.vue";
+import baseTable from "components/base/table/index.vue";
+import baseList from "components/base/list/index.vue";
+
 import treePage from "components/tree/index.vue";
 import baseCheckbox from "components/base/checkbox/index.vue";
 import datePickerPage from "components/date-picker/index.vue";
@@ -20,6 +27,7 @@ import cardListFlip from "components/flip/cardList.vue";
 import itemsListFlip from "components/flip/liList.vue";
 import filp from "components/flip/index.vue";
 import { switchPropsTypes } from "./base/switch/types";
+import { listPropsTypes } from "./base/list/types";
 
 declare module "*.vue" {
   export interface GlobalComponents {
@@ -27,13 +35,22 @@ declare module "*.vue" {
     myCheckbox: checkboxPropsTypes;
     datePickerPage: any;
     baseSwitch: switchPropsTypes;
+    baseInput: inputPropsTypes;
+    baseSelect: selectPropsTypes;
+    baseList: listPropsTypes;
   }
 }
 
 const Components: Array<{ name: string; component: Component }> = [
   { name: "uploadPage", component: uploadPage },
   { name: "treePage", component: treePage },
+  { name: "baseSwitch", component: baseSwitch },
   { name: "baseCheckbox", component: baseCheckbox },
+  { name: "baseSelect", component: baseSelect },
+  { name: "baseInput", component: baseInput },
+  { name: "baseTable", component: baseTable },
+  { name: "baseList", component: baseList },
+
   { name: "datePickerPage", component: datePickerPage },
   { name: "sidePicPreview", component: sidePicPreview },
   { name: "addKettleDynamically", component: addKettleDynamically },
@@ -48,7 +65,6 @@ const Components: Array<{ name: string; component: Component }> = [
   { name: "cardListFlip", component: cardListFlip },
   { name: "itemsListFlip", component: itemsListFlip },
   { name: "filp", component: filp },
-  { name: "baseSwitch", component: baseSwitch },
 ];
 
 function install(app: App) {

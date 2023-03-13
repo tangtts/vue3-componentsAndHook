@@ -6,15 +6,16 @@
 
 # Docs
 
-
+<ClientOnly>
   <div>
     <useStorage></useStorage>
   </div>
 
+
 <script setup>
 import useStorage from "../../../src/components/useStorage/index.vue"
 </script>
-
+</ClientOnly>
 
 # Usage
 

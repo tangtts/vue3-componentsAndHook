@@ -7,12 +7,11 @@
       <p class="tip">当前页面: <span class="name"> {{ PageName }} </span></p>
     </div>
 
-
     <TransitionGroup mode="out-in">
-      <!-- <component :is="radio"/> -->
-      <picFlip v-show="whichPageShow.picFlip" />
-      <cardListFlip v-show="whichPageShow.cardListFlip" />
-      <itemsListFlip v-show="whichPageShow.itemsListFlip" />
+      <!-- <component :is="radio" /> -->
+      <picFlip v-show="whichPageShow.picFlip" key="picFlip" />
+      <cardListFlip v-show="whichPageShow.cardListFlip" key="cardListFlip" />
+      <itemsListFlip v-show="whichPageShow.itemsListFlip" key="itemsListFlip" />
     </TransitionGroup>
   </div>
 </template>
@@ -25,13 +24,14 @@ import { onMounted, ref, computed, reactive, watch, Transition } from "vue";
 
 type PageName = "picFlip" | 'cardListFlip' | 'itemsListFlip'
 
-// const radio = ref('picFlip')
+const radio = ref('picFlip')
 const whichPageShow = reactive<Record<PageName, boolean>>({
   picFlip: true,
   cardListFlip: false,
   itemsListFlip: false
 })
 const changePage = (PageName: PageName) => {
+  radio.value = PageName
   for (const key in whichPageShow) {
     if (key == PageName) {
       whichPageShow[key] = true

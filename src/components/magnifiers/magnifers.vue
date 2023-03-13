@@ -1,10 +1,10 @@
 <template>
-  <div class="container" @mouseover="boxShow=true" @mouseout="boxShow=false" @mousemove="onMouseMove" ref="boothRef">
+  <div class="container" @mouseover="boxShow = true" @mouseout="boxShow = false" @mousemove="onMouseMove" ref="boothRef">
 
     <img :src="props.img" />
-
+    <!-- 遮罩层 -->
     <div class="mask" ref="maskRef" v-show="boxShow" />
-
+    <!-- 大图片 -->
     <div class="big-img_box" ref="bigImgBoxRef" v-show="boxShow">
       <img class="big-img" ref="bigImgRef" :src="props.img" />
     </div>
@@ -21,7 +21,7 @@ const maskRef = ref<HTMLElement | null>(null);
 const bigImgRef = ref<HTMLElement | null>(null);
 const bigImgBoxRef = ref<HTMLElement | null>(null);
 const boxShow = ref(false);
-
+// 最外层可以mouse 的盒子
 const booth = boothRef as Ref<HTMLElement>
 const mask = maskRef as Ref<HTMLElement>
 const bigImgBox = bigImgBoxRef as Ref<HTMLElement>
@@ -33,13 +33,13 @@ const onMouseMove = (e: MouseEvent) => {
   // let x = e.pageX - booth.value.offsetLeft;
   // let y = e.pageY - booth.value.offsetTop;
   // let maskRefX = x - mask.value.offsetWidth / 2;
-  //  let maskRefY = y - mask.value.offsetHeight / 2;
+  // let maskRefY = y - mask.value.offsetHeight / 2;
 
-  let x = e.pageX - booth.value.getBoundingClientRect().left;
-  let y = e.pageY - booth.value.getBoundingClientRect().bottom;
+  let x = e.clientX - booth.value.getBoundingClientRect().left;
+  let y = e.clientY - booth.value.getBoundingClientRect().top;
   // 如果不减去 1/2，鼠标在左上方
   let maskRefX = x - mask.value.offsetWidth / 2;
-  let maskRefY = y;
+  let maskRefY = y - mask.value.offsetHeight / 2;
 
   // maskRef的x最大移动距离,只需要看 mask 的最右边 移动了多少距离
   let maskRefXMaxMove = booth.value.offsetWidth - mask.value.offsetWidth;
@@ -51,7 +51,6 @@ const onMouseMove = (e: MouseEvent) => {
   let bigImgYMaxMove =
     bigImgBox.value.offsetHeight - bigImg.value.offsetHeight;
 
-  console.log(maskRefXMaxMove, "maskRefXMaxMove", maskRefX, "maskRefX")
 
   if (maskRefX <= 0) {
     maskRefX = 0;

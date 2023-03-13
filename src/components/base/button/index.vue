@@ -39,7 +39,7 @@ const activeClass = computed(() => {
   }
 
   &.warning {
-    @apply bg-yellow-400;
+    @apply bg-yellow-500;
   }
 
 
