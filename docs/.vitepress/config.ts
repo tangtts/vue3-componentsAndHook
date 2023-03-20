@@ -32,6 +32,10 @@ export default {
               text: "useStorage",
               link: "/hook/useStorage/",
             },
+            {
+              text: "useFetch",
+              link: "/hook/useFetch/",
+            },
           ],
         },
       ],

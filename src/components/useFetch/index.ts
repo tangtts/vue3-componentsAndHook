@@ -227,7 +227,7 @@ export default function useFetch<T>(
       loading(false);
       return Promise.resolve(null);
     }
-    
+
     /** @type {json / text} 格式化后的真实数据 */
     let responseData: any = null;
     return new Promise<Response | null>((resolve, reject) => {

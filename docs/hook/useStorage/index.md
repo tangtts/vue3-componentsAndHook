@@ -7,14 +7,14 @@
 
 # Docs
 
-<ClientOnly>
-  <div>
+
+  <ClientOnly>
     <useStorage></useStorage>
-  </div>
-<script setup>
-import useStorage from "../../../src/components/useStorage/index.vue"
-</script>
-</ClientOnly>
+  </ClientOnly>
+
+  <script setup>
+  import useStorage from "../../../src/components/useStorage/index.vue"
+  </script>
 
 # Usage
 
