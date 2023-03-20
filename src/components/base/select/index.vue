@@ -12,7 +12,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { assetsElement } from "../../../utils/index";
+import assetsElement from "../../../utils/assetsElement";
 import { onMounted, ref, computed, reactive, watch } from "vue";
 import baseInput from "../input/index.vue"
 import { selectProps, checkEmit } from "./types";

@@ -4,4 +4,4 @@ function assetsElement(ele: HTMLElement | null): asserts ele {
   }
 }
 
-export { assetsElement };
+export default assetsElement;

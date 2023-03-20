@@ -10,7 +10,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { assetsElement } from "../../../utils/index";
+import assetsElement from "../../../utils/assetsElement";
 import { onMounted, ref, computed, reactive, watch, PropType, CSSProperties } from "vue";
 import { checkEmit, switchProps } from "./types";
 const props = defineProps(switchProps)

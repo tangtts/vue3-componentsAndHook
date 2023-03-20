@@ -1,5 +1,6 @@
 # useLocaleStorage
-> 对 localStorage 进行操作，包括 设置`setStorage`,获取单个`getStorage`,获取所有`getAllStorage`,判断是否有`hasStorage`  删除`removeStorage`等
+> 对 localStorage 进行操作`sessionStorage`或者`localStorage`，包括 设置`setStorage`,获取单个`getStorage`,获取所有`getAllStorage`,判断是否有`hasStorage`  删除`removeStorage`等,可以设置`prefix`添加前缀，添加`expire`设置过期时间 等等
+> `setStorage`,可以设置过期时间,当使用 `getStorage`获取的时候，可以判断是否过期，如果过期直接删除,如果没有过期，自动续期，进行保活
 
 
 
@@ -10,8 +11,6 @@
   <div>
     <useStorage></useStorage>
   </div>
-
-
 <script setup>
 import useStorage from "../../../src/components/useStorage/index.vue"
 </script>

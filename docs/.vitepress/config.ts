@@ -18,6 +18,10 @@ export default {
         icon: "github",
         link: "https://github.com/tangtts/vue3-componentsAndHook.git",
       },
+      {
+        icon: "linkedin",
+        link: "https://juejin.cn/user/308289423282296",
+      },
     ],
     sidebar: {
       "/hook/": [
