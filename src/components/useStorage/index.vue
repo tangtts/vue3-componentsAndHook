@@ -1,15 +1,29 @@
 <template>
   <div>
+    <el-form :model="formInline" label-width="120px" size="large">
 
-    <base-input v-model="formInline.key" placeholder="Storage Key" />
-    <base-input style="margin-top: 5px;" v-model="formInline.value" placeholder="Storage value" />
-    <base-select style="margin-top: 5px;" v-model="formInline.expire" :options="options" />
+      <el-form-item label="Storage Key">
+        <el-input v-model="formInline.key" placeholder="请选择key" />
+      </el-form-item>
 
-    <div class="action">
-      <base-button type="warning" @click="onSubmit()">Setting Storage</base-button>
-      <base-button type="danger" @click="handleClearSelectStorage">clear Select Storage</base-button>
-      <base-button @click="handleClearStorage">clear All Storage</base-button>
-    </div>
+      <el-form-item label="Storage value">
+        <el-input v-model="formInline.value" placeholder="请选择value" />
+      </el-form-item>
+
+      <el-form-item label="expire Time">
+        <el-select style="width:100%" v-model="formInline.expire" placeholder="请选择 过期时间">
+          <el-option v-for="option in  options" :key="option.label" :label="option.label" :value="option.value" />
+
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+
+        <el-button type="primary" @click="onSubmit">
+          提交
+        </el-button>
+      </el-form-item>
+    </el-form>
+
 
     <baseList v-model="tableData" :minusOne="remove">
       <template #default="{ item }">
@@ -31,6 +45,7 @@ import baseList from "../base/list/index.vue"
 import type { StoreStorage } from "./useStorage"
 import { ref, reactive, watch, computed } from "vue";
 import { IOption } from "components/base/select/types";
+
 
 const options = ref<IOption[]>([
   { label: "1秒", value: "1" },

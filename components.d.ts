@@ -47,6 +47,7 @@ declare module '@vue/runtime-core' {
     UploadDrag: typeof import('./src/components/upload/drag.vue')['default']
     UploadUpload: typeof import('./src/components/upload/upload.vue')['default']
     UseFetch: typeof import('./src/components/useFetch/index.vue')['default']
+    UseRxjs: typeof import('./src/components/useRxjs/index.vue')['default']
     UseStorage: typeof import('./src/components/useStorage/index.vue')['default']
     Virtual: typeof import('./src/components/virtual/index.vue')['default']
     VirtualUserItem: typeof import('./src/components/virtual/userItem.vue')['default']

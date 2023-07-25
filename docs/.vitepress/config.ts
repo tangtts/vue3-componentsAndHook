@@ -36,6 +36,10 @@ export default {
               text: "useFetch",
               link: "/hook/useFetch/",
             },
+            {
+              text: "useRxjs",
+              link: "/hook/useRxjs/",
+            },
           ],
         },
       ],

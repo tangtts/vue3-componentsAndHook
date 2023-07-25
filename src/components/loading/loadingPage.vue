@@ -48,12 +48,6 @@ const baGuaContainerStyle = computed(() => {
 }
 
 
-
-body {
-  background-color: #eeeeee;
-}
-
-
 #baGuaContainer {
   border-radius: 200px;
   position: relative;

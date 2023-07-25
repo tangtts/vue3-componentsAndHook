@@ -1,10 +1,5 @@
 <template>
   <div class="dark">
-    <!-- <datePickerPage></datePickerPage> -->
-    <!-- <flip /> -->
-    <filp />
-    <!-- <sidePicPreview />
-       -->
 
 
     <!-- <myUpload /> -->
@@ -24,16 +19,18 @@
 
     <!-- <Loading /> -->
     <!-- <JinCai/> -->
-    <acd />
+    <O />
   </div>
 </template>
 <script lang="ts" setup>
-import acd from "./components/useFetch/index.vue"
+import O from "./components/useRxjs/index.vue"
 // import BaGua from './components/baGua/BaGua.vue'
 import Loading from "./components/loading/index.vue"
 import clickOutside from "./components/clickOutside/index.vue"
 import { createApp, defineComponent, onMounted, h, ref, createVNode, render, reactive, Ref, shallowRef, toRaw, watch, isRef, ComputedRef } from "vue";
-
+const dd = () => {
+  console.log(12)
+}
 </script>
 
 <style lang="scss">
